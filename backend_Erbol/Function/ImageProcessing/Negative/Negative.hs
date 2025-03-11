@@ -1,5 +1,4 @@
--- Main.hs
-module Main where
+module ImageProcessing.Negative.Negative where
 
 import Codec.Picture
 import System.Environment (getArgs)

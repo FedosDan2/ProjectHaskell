@@ -1,16 +1,16 @@
 C:\Users\fedya\AppData\Local\Programs\stack\x86_64-windows\ghc-9.8.4\lib\x86_64-windows-ghc-9.8.4\rts-1.0.2\include\ghcversion.h:
   hash: 95162794a3bf5e6167631fdd41a509846597231d523d0f21a76713b1f801373c
-C:\Users\fedya\HaskProj\.stack-work\dist\f24b2e15\build\HaskProj-exe\autogen\Paths_HaskProj.hs:
-  hash: 4572516a4206c044203eb4170c47f27c47a0d87540c8bc21dcb9c8a7bafde1ee
-C:\Users\fedya\HaskProj\.stack-work\dist\f24b2e15\build\HaskProj-exe\autogen\cabal_macros.h:
-  hash: 4e3be4b2a49bc5871f7b4c7e57915855852a4a9244909b4f525351876bbbb993
-C:\Users\fedya\HaskProj\CHANGELOG.md:
+C:\Users\fedya\HaskProj\backend_Erbol\.stack-work\dist\f24b2e15\build\HaskProj-exe\autogen\Paths_HaskProj.hs:
+  hash: 256cb8f904cac8b1b3a89183c316de09e40c2ee4a826a504aeb6804da1c89e62
+C:\Users\fedya\HaskProj\backend_Erbol\.stack-work\dist\f24b2e15\build\HaskProj-exe\autogen\cabal_macros.h:
+  hash: f09ea2161c6b76ca187e835e1752bef58768aab70547479ec7004f5e7e5c7681
+C:\Users\fedya\HaskProj\backend_Erbol\CHANGELOG.md:
   hash: 6b76127284ae7b1e785042de36a013bd455bd9a75555f76215e041f075056769
-C:\Users\fedya\HaskProj\HaskProj.cabal:
-  hash: e285fb61cadf7ce4aec2b067dfea3c8f48352deb5b1622b6ac5911c959a7e577
-C:\Users\fedya\HaskProj\README.md:
+C:\Users\fedya\HaskProj\backend_Erbol\HaskProj.cabal:
+  hash: 069b5094d0384a0d134822c5ec031b4ad548b55760f823499da62fd242a01c61
+C:\Users\fedya\HaskProj\backend_Erbol\README.md:
   hash: 6436ea6d6c6dfd7af4e152ce65a66a33917d01af7b8d04d826bb90372877475b
-C:\Users\fedya\HaskProj\app\Main.hs:
-  hash: 99557f1eedde626af9e9bf5bbd05b8acd7d299c8bdc975410c9344bdae4c3df6
-C:\Users\fedya\HaskProj\package.yaml:
-  hash: f921483b885c258278dc1485b6b09caa9af7e09f37bcfb97a4812348068df9f1
+C:\Users\fedya\HaskProj\backend_Erbol\app\Main.hs:
+  hash: 6e29bdfedc17fb8a6875c83c885423746786609462a8353cea221463d57c21ad
+C:\Users\fedya\HaskProj\backend_Erbol\package.yaml:
+  hash: 7f108b1c300461b689b1220bd70f8d7b4a20cb5867cf8192219515b0315e1e43

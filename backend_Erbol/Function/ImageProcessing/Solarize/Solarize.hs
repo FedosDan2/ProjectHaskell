@@ -1,4 +1,4 @@
-module Main where
+module ImageProcessing.Solarize.Solarize where
 
 import Codec.Picture
 import System.Environment (getArgs)

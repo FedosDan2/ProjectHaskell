@@ -2,10 +2,12 @@ module Main where
 
 import System.Environment (getArgs)
 import System.FilePath (takeFileName, replaceExtension, combine)
-import ImageProcessing.Brightness (adjustBrightness)
-import ImageProcessing.Grayscale (applyGrayscale)
-import ImageProcessing.Negative (applyNegative)
-import ImageProcessing.Sepia (applySepia)
+import ImageProcessing.Brightness.Brightness (adjustBrightness)
+import ImageProcessing.Grayscale.Grayscale (applyGrayscale)
+import ImageProcessing.Negative.Negative (applyNegative)
+import ImageProcessing.Sepia.Sepia (applySepia)
+import ImageProcessing.Solarize.Solarize (applySolarize)
+import ImageProcessing.Scale.Scale (scaleImage)
 import Codec.Picture
 
 main :: IO ()
@@ -24,5 +26,7 @@ main = do
                 "grayscale" -> applyGrayscale inputPath outputPath
                 "negative" -> applyNegative inputPath outputPath
                 "brightness" -> adjustBrightness inputPath outputPath 1.5
+                "solarize" -> applySolarize inputPath outputPath
+                "scale" -> scaleImage inputPath outputPath 1.5
                 _ -> putStrLn "Неизвестный тип фильтра."
         _ -> putStrLn "Использование: <input> <filter> <outputDir>"

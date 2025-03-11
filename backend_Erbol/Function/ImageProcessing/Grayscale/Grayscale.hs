@@ -1,4 +1,4 @@
-module Main where
+module ImageProcessing.Grayscale.Grayscale where
 
 import Codec.Picture
 import System.Environment (getArgs)

@@ -46,12 +46,12 @@ getBinDir, getLibDir, getDynLibDir, getDataDir, getLibexecDir, getSysconfDir :: 
 
 
 bindir, libdir, dynlibdir, datadir, libexecdir, sysconfdir :: FilePath
-bindir     = "C:\\Users\\fedya\\HaskProj\\.stack-work\\install\\814a82d2\\bin"
-libdir     = "C:\\Users\\fedya\\HaskProj\\.stack-work\\install\\814a82d2\\lib\\x86_64-windows-ghc-9.8.4\\HaskProj-0.1.0.0-JWg1NRdciJp8UjgUIY2192"
-dynlibdir  = "C:\\Users\\fedya\\HaskProj\\.stack-work\\install\\814a82d2\\lib\\x86_64-windows-ghc-9.8.4"
-datadir    = "C:\\Users\\fedya\\HaskProj\\.stack-work\\install\\814a82d2\\share\\x86_64-windows-ghc-9.8.4\\HaskProj-0.1.0.0"
-libexecdir = "C:\\Users\\fedya\\HaskProj\\.stack-work\\install\\814a82d2\\libexec\\x86_64-windows-ghc-9.8.4\\HaskProj-0.1.0.0"
-sysconfdir = "C:\\Users\\fedya\\HaskProj\\.stack-work\\install\\814a82d2\\etc"
+bindir     = "C:\\Users\\fedya\\HaskProj\\backend_Erbol\\.stack-work\\install\\814a82d2\\bin"
+libdir     = "C:\\Users\\fedya\\HaskProj\\backend_Erbol\\.stack-work\\install\\814a82d2\\lib\\x86_64-windows-ghc-9.8.4\\HaskProj-0.1.0.0-CWXfSWFAv7K5FU6gE8jy5y"
+dynlibdir  = "C:\\Users\\fedya\\HaskProj\\backend_Erbol\\.stack-work\\install\\814a82d2\\lib\\x86_64-windows-ghc-9.8.4"
+datadir    = "C:\\Users\\fedya\\HaskProj\\backend_Erbol\\.stack-work\\install\\814a82d2\\share\\x86_64-windows-ghc-9.8.4\\HaskProj-0.1.0.0"
+libexecdir = "C:\\Users\\fedya\\HaskProj\\backend_Erbol\\.stack-work\\install\\814a82d2\\libexec\\x86_64-windows-ghc-9.8.4\\HaskProj-0.1.0.0"
+sysconfdir = "C:\\Users\\fedya\\HaskProj\\backend_Erbol\\.stack-work\\install\\814a82d2\\etc"
 
 getBinDir     = catchIO (getEnv "HaskProj_bindir")     (\_ -> return bindir)
 getLibDir     = catchIO (getEnv "HaskProj_libdir")     (\_ -> return libdir)

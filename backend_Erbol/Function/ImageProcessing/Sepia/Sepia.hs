@@ -1,5 +1,4 @@
--- Main.hs
-module Main where
+module ImageProcessing.Sepia.Sepia where
 
 import Codec.Picture
 import System.Environment (getArgs)

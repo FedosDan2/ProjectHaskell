@@ -1,4 +1,4 @@
-module Main where
+module ImageProcessing.Scale.Scale where
 
 import System.Environment (getArgs)
 import Codec.Picture
