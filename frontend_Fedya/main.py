@@ -77,6 +77,7 @@ class Window:
         self.brightness_frame = None
         self.scale_flag = False
         self.scale_frame = None
+        self.solarize_flag = False
 
         # Добавляем виджеты и меню из `func`
         self.func.right_panel_widgets()

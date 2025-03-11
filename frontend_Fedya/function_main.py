@@ -199,26 +199,34 @@ class ImageProcces_and_TopMenu:
 
     # 🔹 Правая панель (Кнопки инструментов)
     def right_panel_widgets(self):
-        """Создаёт кнопки в правой панели"""
-        self.but1 = ctk.CTkFrame(self.window.tools_frame, width=300, height=300)
-        self.but1.pack(side = "bottom", fill="both", padx=5, pady=5)
-        self.window.invert_btn = ctk.CTkButton(self.but1, text="Negative", command=self.invert_colors)
-        self.window.invert_btn.pack(fill = "x", padx=5, pady=5)
-
-        self.but2 = ctk.CTkFrame(self.window.tools_frame, width=300, height=300)
-        self.but2.pack(side = "bottom", fill="both", padx=5, pady=5)
-        self.window.bw_btn = ctk.CTkButton(self.but2, text="Grayscale", command=self.to_black_white)
-        self.window.bw_btn.pack(fill = "x", padx=5, pady=5)
+        """Создаёт кнопки в правой панели в два ряда"""
+        # Создаем контейнер для двух колонок
+        self.buttons_container = ctk.CTkFrame(self.window.tools_frame)
+        self.buttons_container.pack(fill="both", expand=True, padx=5, pady=5)
         
-        self.but3 = ctk.CTkFrame(self.window.tools_frame, width=300, height=300)
-        self.but3.pack(side = "bottom", fill="both", padx=5, pady=5)
-        self.window.sepia_btn = ctk.CTkButton(self.but3, text="Solarize", command=self.to_solarize)
-        self.window.sepia_btn.pack(fill = "x", padx=5, pady=5)
+        # Левая колонка
+        self.left_column = ctk.CTkFrame(self.buttons_container)
+        self.left_column.pack(side="left", fill="both", expand=True, padx=2)
+        
+        # Правая колонка
+        self.right_column = ctk.CTkFrame(self.buttons_container)
+        self.right_column.pack(side="right", fill="both", expand=True, padx=2)
 
-        self.but4 = ctk.CTkFrame(self.window.tools_frame, width=300, height=300)
-        self.but4.pack(side = "bottom", fill="both", padx=5, pady=5)
-        self.window.bright_btn = ctk.CTkButton(self.but4, text="Brightness", command=self.create_brightness_slider)
-        self.window.bright_btn.pack(fill = "x", padx=5, pady=5)
+        # Кнопки левой колонки
+        self.create_button(self.left_column, "Negative", self.invert_colors)
+        self.create_button(self.left_column, "Grayscale", self.to_black_white)
+        
+        # Кнопки правой колонки
+        self.create_button(self.right_column, "Solarize", self.to_solarize)
+        self.create_button(self.right_column, "Sepia", self.to_sepia)
+        self.create_button(self.window.tools_frame, "Brightness", self.create_brightness_slider)
+
+    def create_button(self, parent, text, command):
+        """Вспомогательный метод для создания кнопки"""
+        btn = ctk.CTkButton(parent, text=text, command=command)
+        btn.pack(fill="x", padx=5, pady=5)
+        return btn
+        
 
     # Функция для сохранение изменений
     def save_difference(self):
@@ -315,12 +323,46 @@ class ImageProcces_and_TopMenu:
                     print(f"Ошибка при вызове Haskell-фильтра (Grayscale): {e}")
             self.display_image(self.current_layer["image"])
 
-    # Функция sepia
+    # Функция Solarize
     def to_solarize(self):
         """Переключает изображение на сепию, используя Haskell (Solarize.hs)."""
         if self.current_layer and self.current_layer["image"]:
             image_path = "temp/inputPath/input_solarize.png"
             output_path = "temp/outputPath/output_solarize.png"
+            os.makedirs("temp", exist_ok=True)
+            self.current_layer["copy"].save(image_path)
+            if self.window.solarize_flag:
+                self.current_layer["image"] = self.current_layer["copy"]
+                self.window.solarize_flag = False
+                
+            else:
+                try:
+                    subprocess.run([
+                        "./backend_Erbol/Function/ImageProcessing/Solarize/solarize",
+                        image_path,
+                        output_path
+                    ], check=True)
+                    with Image.open(output_path) as img:
+                        filtered_image = img.copy()  # Копируем изображение в память
+                    
+                    # Удаляем временный файл
+                    self.delete_file(output_path)
+                    self.delete_file(image_path)
+
+                    # Обновляем изображение в слое
+                    self.current_layer["image"] = filtered_image
+                    self.window.edited_image = filtered_image
+                    self.window.solarize_flag = True
+                except subprocess.CalledProcessError as e:
+                    print(f"Ошибка при вызове Haskell-фильтра (Solarize): {e}")
+            self.display_image(self.current_layer["image"])
+
+    # Функция Sepia
+    def to_sepia(self):
+        """Переключает изображение на сепию, используя Haskell (Solarize.hs)."""
+        if self.current_layer and self.current_layer["image"]:
+            image_path = "temp/inputPath/input_sepia.png"
+            output_path = "temp/outputPath/output_sepia.png"
             os.makedirs("temp", exist_ok=True)
             self.current_layer["copy"].save(image_path)
             if self.window.sepia_flag:
@@ -330,7 +372,7 @@ class ImageProcces_and_TopMenu:
             else:
                 try:
                     subprocess.run([
-                        "./backend_Erbol/Function/ImageProcessing/Solarize/solarize",
+                        "./backend_Erbol/Function/ImageProcessing/Sepia/sepia",
                         image_path,
                         output_path
                     ], check=True)

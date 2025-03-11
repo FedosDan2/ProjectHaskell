@@ -12,6 +12,8 @@ C:\Users\fedya\HaskProj\backend_Erbol\Function\ImageProcessing\Grayscale\Graysca
   hash: ef949521a50e93bb1c9c2d3c0ce629878288bafc04b099eddf94fb2ca0672202
 C:\Users\fedya\HaskProj\backend_Erbol\Function\ImageProcessing\Negative\Negative.hs:
   hash: 0dde01180b69e99d5a67fbaa9638ca48eb971aba63ccde8d2c76045b6e8bad09
+C:\Users\fedya\HaskProj\backend_Erbol\Function\ImageProcessing\Pixelate\Pixelate.hs:
+  hash: f807558724081e90eb99c2a8feb4ee846af62997e8fb471dfb3b619579408d61
 C:\Users\fedya\HaskProj\backend_Erbol\Function\ImageProcessing\Scale\Scale.hs:
   hash: 2cacbeed4fb9856cd1a215c43b413c593b3419fd48d5b723209cd04dc34ac546
 C:\Users\fedya\HaskProj\backend_Erbol\Function\ImageProcessing\Sepia\Sepia.hs:
@@ -19,9 +21,9 @@ C:\Users\fedya\HaskProj\backend_Erbol\Function\ImageProcessing\Sepia\Sepia.hs:
 C:\Users\fedya\HaskProj\backend_Erbol\Function\ImageProcessing\Solarize\Solarize.hs:
   hash: 33f9f6e9695ed622db7d8f42fc027dfe4fdbfd6ab2e64cccaff97f95ea7a650a
 C:\Users\fedya\HaskProj\backend_Erbol\Function\Utils.hs:
-  hash: 1ea22590610d8f3cf265307e8a0b359ef4473749d271a6e471847985d8c2082f
+  hash: 4d2a3692ee79fdad18da07e26738e0570e50bab322f935bffe16618184f73b46
 C:\Users\fedya\HaskProj\backend_Erbol\HaskProj.cabal:
-  hash: 069b5094d0384a0d134822c5ec031b4ad548b55760f823499da62fd242a01c61
+  hash: 9f45a720d62282dbc9047796276fc12435bcdf5b4579c9767e9a9d297a73f469
 C:\Users\fedya\HaskProj\backend_Erbol\README.md:
   hash: 6436ea6d6c6dfd7af4e152ce65a66a33917d01af7b8d04d826bb90372877475b
 C:\Users\fedya\HaskProj\backend_Erbol\package.yaml:

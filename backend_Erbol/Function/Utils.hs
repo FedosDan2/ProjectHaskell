@@ -11,4 +11,4 @@ saveImageWithExtension path img = do
     ".jpg" -> saveJpgImage 100 path (ImageRGB8 img)
     ".jpeg" -> saveJpgImage 100 path (ImageRGB8 img)
     ".png" -> savePngImage path (ImageRGB8 img)
-    _ -> putStrLn "Формат не поддерживается для сохранения."
+    _ -> putStrLn "Формат не поддерживается для сохранения." 
