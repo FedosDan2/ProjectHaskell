@@ -77,7 +77,12 @@ class ImageProcces_and_TopMenu:
             "scale_flag": False,
             "scale_frame": False,
             "bright_frame": False,
-            "br_flag_saved": True         
+            "br_flag_saved": True,
+            "pixel_value": 1,
+            "pixel_flag": False,
+            "pixel_frame": False,
+            "pixel_flag_saved": True
+   
         }
 
         new_layer["button"] = ctk.CTkButton(
@@ -215,6 +220,8 @@ class ImageProcces_and_TopMenu:
         # Кнопки левой колонки
         self.create_button(self.left_column, "Negative", self.invert_colors)
         self.create_button(self.left_column, "Grayscale", self.to_black_white)
+        self.create_button(self.left_column, "Pixelate", self.create_pixelate_slider)
+
         
         # Кнопки правой колонки
         self.create_button(self.right_column, "Solarize", self.to_solarize)
@@ -580,3 +587,121 @@ class ImageProcces_and_TopMenu:
                 self.current_layer["scale_flag"] = False
                 self.current_layer["scale_frame"] = False
             
+    def adjust_pixelate(self, value):
+        """Регулирует мозаику, отправляя коэффициент в Haskell."""
+        if self.current_layer and self.current_layer["image"]:
+            try:
+                # Округляем значение до целого числа
+                factor = round(float(value))
+                
+                # Проверяем допустимость значения
+                if factor < 1:
+                    raise ValueError("Размер блока должен быть ≥ 1")
+                    
+                # Проверяем минимальное изменение
+                if abs(factor - self.current_layer.get("pixel_value", 0)) < 1:
+                    return
+                    
+                self.current_layer["pixel_value"] = factor
+
+                # Создаем необходимые директории
+                input_dir = "temp/inputPath"
+                output_dir = "temp/outputPath"
+                os.makedirs(input_dir, exist_ok=True)
+                os.makedirs(output_dir, exist_ok=True)
+
+                image_path = os.path.join(input_dir, "input_pixelate.png")
+                output_path = os.path.join(output_dir, "output_pixelate.png")
+
+                # Сохраняем копию изображения
+                self.current_layer["copy"].save(image_path)
+
+                # Выполняем Haskell-скрипт
+                try:
+                    result = subprocess.run([
+                        "./backend_Erbol/Function/ImageProcessing/Pixelate/pixelate",
+                        image_path,
+                        output_path,
+                        str(factor)  # Теперь передаем целое число
+                    ], capture_output=True, text=True, check=True, timeout=10)
+            
+                except subprocess.TimeoutExpired:
+                    raise RuntimeError("Haskell-процесс превысил время ожидания")
+                except subprocess.CalledProcessError as e:
+                    error_msg = f"Ошибка выполнения Haskell: {e}\nstdout: {e.stdout}\nstderr: {e.stderr}"
+                    raise RuntimeError(error_msg)
+
+                # Проверяем существование выходного файла
+                if not os.path.exists(output_path):
+                    raise FileNotFoundError(f"Файл {output_path} не был создан!")
+
+                # Открываем и обрабатываем результат
+                with Image.open(output_path) as img:
+                    filtered_image = img.copy()
+
+                # Обновляем данные слоя
+                self.current_layer["image"] = filtered_image
+                self.window.edited_image = filtered_image
+                self.display_image(filtered_image)
+
+            except Exception as e:
+                print(f"Ошибка в adjust_pixelate: {str(e)}")
+            finally:
+                # Удаляем временные файлы в любом случае
+                for path in [image_path, output_path]:
+                    try:
+                        if os.path.exists(path):
+                            os.remove(path)
+                    except Exception as e:
+                        print(f"Ошибка при удалении {path}: {e}")
+        else:
+            # Логика закрытия окна ползунка
+            if getattr(self.window, "pixel_frame", None):
+                self.window.pixel_frame.destroy()
+                self.window.pixel_frame = None
+                self.current_layer["pixel_flag"] = False
+                self.current_layer["pixel_frame"] = False
+
+    def create_pixelate_slider(self):
+        """Создаёт окно с ползунком для мозаики."""
+        def on_slider_release(event):
+            try:
+                # Округляем значение до целого
+                value = round(float(pixel_slider.get()))
+                if 1 <= value <= 15:
+                    self.adjust_pixelate(value)
+                else:
+                    print("Значение должно быть между 1 и 10")
+            except ValueError:
+                print("Неверное значение")
+
+        if self.current_layer.get("pixel_flag", False):
+            if getattr(self.window, "pixel_frame", None):
+                self.window.pixel_frame.destroy()
+                self.window.pixel_frame = None
+                self.current_layer["pixel_flag"] = False
+        else:
+            try:
+                self.window.pixel_frame = ctk.CTkFrame(
+                    self.window.right_panel,
+                    height=300,
+                    width=300
+                )
+                self.window.pixel_frame.pack(pady=10)
+
+                initial_value = round(self.current_layer.get("pixel_value", 1))
+                pixel_slider = ctk.CTkSlider(
+                    master=self.window.pixel_frame,
+                    from_=1,
+                    to=15,
+                    number_of_steps=5  # Теперь только целые числа
+                )
+                pixel_slider.pack(pady=10)
+                pixel_slider.set(initial_value)
+                pixel_slider.bind("<ButtonRelease-1>", on_slider_release)
+
+                self.current_layer["pixel_flag"] = True
+                self.current_layer["pixel_frame"] = True
+
+            except Exception as e:
+                print(f"Ошибка при создании ползунка: {e}")
