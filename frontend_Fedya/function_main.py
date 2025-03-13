@@ -81,7 +81,10 @@ class ImageProcces_and_TopMenu:
             "pixel_value": 1,
             "pixel_flag": False,
             "pixel_frame": False,
-            "pixel_flag_saved": True
+            "pixel_flag_saved": True,
+            "contrast_value": 1,
+            "contrast_flag": False,
+            "contrast_frame": False,
    
         }
 
@@ -127,9 +130,6 @@ class ImageProcces_and_TopMenu:
         if (self.current_layer["scale_flag"] == False) and (self.current_layer["scale_frame"] == True):
             self.current_layer["scale_flag"] = True
             self._create_scale_slider_frame()
-
-
-
 
     # Функция отображения изображения на canvas
     def display_image(self, image):
@@ -202,39 +202,50 @@ class ImageProcces_and_TopMenu:
                 file_path = os.path.join(folderoutput_path, file_name)
                 self.delete_file(file_path)
 
-    # 🔹 Правая панель (Кнопки инструментов)
-    def right_panel_widgets(self):
-        """Создаёт кнопки в правой панели в два ряда"""
-        # Создаем контейнер для двух колонок
-        self.buttons_container = ctk.CTkFrame(self.window.tools_frame)
+     # 🔹 Меню (Effects)
+    def image_effects(self):
+        self.buttons_container = ctk.CTkFrame(self.window.tools_frame, fg_color="#535353")
         self.buttons_container.pack(fill="both", expand=True, padx=5, pady=5)
         
-        # Левая колонка
-        self.left_column = ctk.CTkFrame(self.buttons_container)
-        self.left_column.pack(side="left", fill="both", expand=True, padx=2)
+        options = ["Negative", "Grayscale", "Solarize", "Sepia", "Contrast"]
+        self.menu_combobox1 = ctk.CTkComboBox(self.buttons_container, values=options, font=("TimesNewRoman", 15, "bold"), command=self.menu_effects)
+        self.menu_combobox1.pack(fill="both", padx=2)
+        self.menu_combobox1.set("Image Effects")
+
+    def menu_effects(self, choice):
+        """Обрабатывает выбор из выпадающего списка."""
+        if choice == "Negative":
+            self.invert_colors()
+        elif choice == "Grayscale":
+            self.to_black_white()
+        elif choice == "Solarize":
+            self.to_solarize()
+        elif choice == "Sepia":
+            self.to_sepia()
+        elif choice == "Contrast":
+            self.create_contrast_slider()
+
+    def geometry_transform(self):
+        self.buttons_container = ctk.CTkFrame(self.window.tools_frame, fg_color="#535353")
+        self.buttons_container.pack(fill="both", expand=True, padx=5, pady=5)
         
-        # Правая колонка
-        self.right_column = ctk.CTkFrame(self.buttons_container)
-        self.right_column.pack(side="right", fill="both", expand=True, padx=2)
+        options = ["Rotation", "Scaling", "Horizontal flip", "Vertical flip"]
+        self.menu_combobox1 = ctk.CTkComboBox(self.buttons_container, values=options, font=("TimesNewRoman", 15, "bold"), command=self.menu_transforms)
+        self.menu_combobox1.pack(fill="both", padx=2)
+        self.menu_combobox1.set("Geometry Transforms")
 
-        # Кнопки левой колонки
-        self.create_button(self.left_column, "Negative", self.invert_colors)
-        self.create_button(self.left_column, "Grayscale", self.to_black_white)
-        self.create_button(self.left_column, "Pixelate", self.create_pixelate_slider)
+    def menu_transforms(self, choice):
+        """Обрабатывает выбор из выпадающего списка."""
+        if choice == "Rotation":
+            self.invert_colors()
+        elif choice == "Scaling":
+            self._create_scale_slider_frame()
+        elif choice == "Horizontal flip":
+            self.to_solarize()
+        elif choice == "Vertical flip":
+            self.to_sepia() 
 
         
-        # Кнопки правой колонки
-        self.create_button(self.right_column, "Solarize", self.to_solarize)
-        self.create_button(self.right_column, "Sepia", self.to_sepia)
-        self.create_button(self.window.tools_frame, "Brightness", self.create_brightness_slider)
-
-    def create_button(self, parent, text, command):
-        """Вспомогательный метод для создания кнопки"""
-        btn = ctk.CTkButton(parent, text=text, command=command)
-        btn.pack(fill="x", padx=5, pady=5)
-        return btn
-        
-
     # Функция для сохранение изменений
     def save_difference(self):
         self.current_layer["copy"] = self.current_layer["image"]
@@ -563,7 +574,7 @@ class ImageProcces_and_TopMenu:
                 # Выполняем масштабирование
                 scale_factor = self.scale_slider.get()
                 subprocess.run([
-                    "./backend_Erbol/Function/ImageProcessing/Scale/scale",
+                    "./backend_Erbol/Function/ImageTransform/Scale/scale",
                     scale_input_path,
                     scale_output_path,
                     str(scale_factor)
@@ -587,6 +598,7 @@ class ImageProcces_and_TopMenu:
                 self.current_layer["scale_flag"] = False
                 self.current_layer["scale_frame"] = False
             
+    # Функция для наложения мозаики
     def adjust_pixelate(self, value):
         """Регулирует мозаику, отправляя коэффициент в Haskell."""
         if self.current_layer and self.current_layer["image"]:
@@ -694,14 +706,140 @@ class ImageProcces_and_TopMenu:
                     master=self.window.pixel_frame,
                     from_=1,
                     to=15,
-                    number_of_steps=5  # Теперь только целые числа
+                    number_of_steps = 15  # Теперь только целые числа
                 )
+
+                # Текстовая метка
+                ctk.CTkLabel(
+                    self.window.pixel_frame,
+                    text="Коэффицент (1x - 15x)"
+                ).pack(pady=2)
+
                 pixel_slider.pack(pady=10)
                 pixel_slider.set(initial_value)
                 pixel_slider.bind("<ButtonRelease-1>", on_slider_release)
 
                 self.current_layer["pixel_flag"] = True
                 self.current_layer["pixel_frame"] = True
+
+            except Exception as e:
+                print(f"Ошибка при создании ползунка: {e}")
+
+
+    def adjust_contrast(self, value):
+        if self.current_layer and self.current_layer["image"]:
+            try:
+                # Округляем значение до двух знаков после запятой
+                factor = round(float(value), 2)
+                
+                # Проверяем минимальное изменение
+                if abs(factor - self.current_layer.get("contrast_value", 1.0)) < 0.01:
+                    return
+                    
+                self.current_layer["contrast_value"] = factor
+
+                # Создаем необходимые директории
+                image_path = "temp/inputPath/input_contrast.png"
+                output_path = "temp/outputPath/output_contrast.png"
+                os.makedirs(os.path.dirname(image_path), exist_ok=True)
+                os.makedirs(os.path.dirname(output_path), exist_ok=True)
+
+                # Сохраняем копию изображения
+                self.current_layer["copy"].save(image_path)
+
+                # Выполняем Haskell-скрипт
+                try:
+                    result = subprocess.run([
+                        "./backend_Erbol/Function/ImageProcessing/Contrast/contrast",
+                        image_path,
+                        output_path,
+                        str(factor)
+                    ], capture_output=True, text=True, check=True, timeout=10)
+                    
+                except subprocess.TimeoutExpired:
+                    raise RuntimeError("Haskell-процесс превысил время ожидания")
+                except subprocess.CalledProcessError as e:
+                    error_msg = f"Ошибка выполнения Haskell: {e}\nstdout: {e.stdout}\nstderr: {e.stderr}"
+                    raise RuntimeError(error_msg)
+
+                # Проверяем существование выходного файла
+                if not os.path.exists(output_path):
+                    raise FileNotFoundError(f"Файл {output_path} не был создан!")
+
+                # Открываем и обрабатываем результат
+                with Image.open(output_path) as img:
+                    filtered_image = img.copy()
+
+                # Обновляем данные слоя
+                self.current_layer["image"] = filtered_image
+                self.window.edited_image = filtered_image
+                self.display_image(filtered_image)
+
+            except Exception as e:
+                print(f"Ошибка в adjust_contrast: {str(e)}")
+            finally:
+                # Удаляем временные файлы в любом случае
+                for path in [image_path, output_path]:
+                    try:
+                        if os.path.exists(path):
+                            os.remove(path)
+                    except Exception as e:
+                        print(f"Ошибка при удалении {path}: {e}")
+        else:
+            # Логика закрытия окна ползунка
+            if getattr(self.window, "contrast_frame", None):
+                self.window.contrast_frame.destroy()
+                self.window.contrast_frame = None
+            self.current_layer["contrast_flag"] = False
+            self.current_layer["contrast_frame"] = False
+
+    def create_contrast_slider(self):
+        """Создаёт окно с ползунком."""
+        def on_slider_release(event):
+            try:
+                # Округляем значение до целого
+                value = float(contrast_slider.get())
+                if 0 <= value <= 2:
+                    self.adjust_contrast(value)
+                else:
+                    print("Значение должно быть между 1 и 2")
+            except ValueError:
+                print("Неверное значение")
+
+        if self.current_layer.get("contrast_flag", False):
+            if getattr(self.window, "contrast_frame", None):
+                self.window.contrast_frame.destroy()
+                self.window.contrast_frame = None
+                self.current_layer["contrast_flag"] = False
+        else:
+            try:
+                self.window.contrast_frame = ctk.CTkFrame(
+                    self.window.right_panel,
+                    height=300,
+                    width=300
+                )
+                self.window.contrast_frame.pack(pady=10)
+
+                initial_value = self.current_layer.get("contrast_value", 1)
+                contrast_slider = ctk.CTkSlider(
+                    master=self.window.contrast_frame,
+                    from_=0,
+                    to=2,
+                    number_of_steps = 20 
+                )
+
+                # Текстовая метка
+                ctk.CTkLabel(
+                    self.window.contrast_frame,
+                    text="Коэффицент (0.1x - 2.0x)"
+                ).pack(pady=2)
+
+                contrast_slider.pack(pady=10)
+                contrast_slider.set(initial_value)
+                contrast_slider.bind("<ButtonRelease-1>", on_slider_release)
+
+                self.current_layer["contrast_flag"] = True
+                self.current_layer["contrast_frame"] = True
 
             except Exception as e:
                 print(f"Ошибка при создании ползунка: {e}")

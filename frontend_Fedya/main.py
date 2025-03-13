@@ -49,7 +49,7 @@ class Window:
         self.layers_label.pack(pady=5)
 
         # Заменяем Listbox на ScrollableFrame
-        self.layers_list = ctk.CTkScrollableFrame(self.layers_frame, height=300)
+        self.layers_list = ctk.CTkScrollableFrame(self.layers_frame, height=200)
         self.layers_list.pack(fill="both", expand=True, padx=5, pady=5)
 
         # 🔹 Кнопка для добавления нового слоя
@@ -78,13 +78,16 @@ class Window:
         self.scale_flag = False
         self.scale_frame = None
         self.solarize_flag = False
+        self.contrast_flag = False
         self.pixel_frame = False
+        self.contrast_frame = False
 
         # Добавляем виджеты и меню из `func`
-        self.func.right_panel_widgets()
         self.func.top_menu1()
         self.func.top_menu2()
         self.func.top_menu3()
+        self.func.image_effects()
+        self.func.geometry_transform()
 
     def run(self):
         self.root.mainloop()
