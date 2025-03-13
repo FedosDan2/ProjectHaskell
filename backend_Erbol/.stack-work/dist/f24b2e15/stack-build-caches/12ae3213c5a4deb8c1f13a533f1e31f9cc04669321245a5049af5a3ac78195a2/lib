@@ -8,22 +8,26 @@ C:\Users\fedya\HaskProj\backend_Erbol\CHANGELOG.md:
   hash: 6b76127284ae7b1e785042de36a013bd455bd9a75555f76215e041f075056769
 C:\Users\fedya\HaskProj\backend_Erbol\Function\ImageProcessing\Brightness\Brightness.hs:
   hash: 8bbe7eb19bbea8478c8aac40478ef98887a87a490528ca95e8e7787f464198b9
+C:\Users\fedya\HaskProj\backend_Erbol\Function\ImageProcessing\Contrast\Contrast.hs:
+  hash: 26879acc8a76f1c04686fbf097d3e8e75e52cc24996ff757f90dc43e67a4c40d
 C:\Users\fedya\HaskProj\backend_Erbol\Function\ImageProcessing\Grayscale\Grayscale.hs:
   hash: ef949521a50e93bb1c9c2d3c0ce629878288bafc04b099eddf94fb2ca0672202
 C:\Users\fedya\HaskProj\backend_Erbol\Function\ImageProcessing\Negative\Negative.hs:
   hash: 0dde01180b69e99d5a67fbaa9638ca48eb971aba63ccde8d2c76045b6e8bad09
 C:\Users\fedya\HaskProj\backend_Erbol\Function\ImageProcessing\Pixelate\Pixelate.hs:
   hash: f807558724081e90eb99c2a8feb4ee846af62997e8fb471dfb3b619579408d61
-C:\Users\fedya\HaskProj\backend_Erbol\Function\ImageProcessing\Scale\Scale.hs:
-  hash: 2cacbeed4fb9856cd1a215c43b413c593b3419fd48d5b723209cd04dc34ac546
 C:\Users\fedya\HaskProj\backend_Erbol\Function\ImageProcessing\Sepia\Sepia.hs:
   hash: 2e346c1dc020fa59b4474d2cb969d912fcdb0d19c4fc35c657cc2378d6a4bf82
 C:\Users\fedya\HaskProj\backend_Erbol\Function\ImageProcessing\Solarize\Solarize.hs:
   hash: 33f9f6e9695ed622db7d8f42fc027dfe4fdbfd6ab2e64cccaff97f95ea7a650a
+C:\Users\fedya\HaskProj\backend_Erbol\Function\ImageTransform\Rotation\Rotation.hs:
+  hash: c96829f9abba5723904e3a78cbd09fa15d37ccab6758b8a4cc9fb4e501cfabb9
+C:\Users\fedya\HaskProj\backend_Erbol\Function\ImageTransform\Scale\Scale.hs:
+  hash: 7e2625c0f9d494329f5b5c71f6453c23242e1df56ca11b467ed20ec61260bd2e
 C:\Users\fedya\HaskProj\backend_Erbol\Function\Utils.hs:
   hash: 4d2a3692ee79fdad18da07e26738e0570e50bab322f935bffe16618184f73b46
 C:\Users\fedya\HaskProj\backend_Erbol\HaskProj.cabal:
-  hash: 9f45a720d62282dbc9047796276fc12435bcdf5b4579c9767e9a9d297a73f469
+  hash: db8b45d9b42dcf1a189e6c5867c4a22e7a103eab3103cc09700f4e1c5c059be1
 C:\Users\fedya\HaskProj\backend_Erbol\README.md:
   hash: 6436ea6d6c6dfd7af4e152ce65a66a33917d01af7b8d04d826bb90372877475b
 C:\Users\fedya\HaskProj\backend_Erbol\package.yaml:

@@ -7,8 +7,10 @@ import ImageProcessing.Grayscale.Grayscale (applyGrayscale)
 import ImageProcessing.Negative.Negative (applyNegative)
 import ImageProcessing.Sepia.Sepia (applySepia)
 import ImageProcessing.Solarize.Solarize (applySolarize)
-import ImageProcessing.Scale.Scale (scaleImage) 
+import ImageTransform.Scale.Scale (scaleImage) 
 import ImageProcessing.Pixelate.Pixelate (applyPixelate)
+import ImageProcessing.Contrast.Contrast (applyContrast)
+import ImageTransform.Rotation.Rotation (applyRotate)
 import Codec.Picture
 
 main :: IO ()

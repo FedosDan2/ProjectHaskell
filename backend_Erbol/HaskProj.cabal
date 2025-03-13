@@ -26,12 +26,14 @@ source-repository head
 library
   exposed-modules:
       ImageProcessing.Brightness.Brightness
+      ImageProcessing.Contrast.Contrast
       ImageProcessing.Grayscale.Grayscale
       ImageProcessing.Negative.Negative
       ImageProcessing.Pixelate.Pixelate
-      ImageProcessing.Scale.Scale
       ImageProcessing.Sepia.Sepia
       ImageProcessing.Solarize.Solarize
+      ImageTransform.Rotation.Rotation
+      ImageTransform.Scale.Scale
       Utils
   other-modules:
       Paths_HaskProj
