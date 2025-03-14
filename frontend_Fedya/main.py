@@ -37,6 +37,9 @@ class Window:
         self.layers_frame = ctk.CTkFrame(self.right_panel, width=300, height=300)
         self.layers_frame.pack(side = "bottom", fill="both", padx=5, pady=5)
 
+        self.remove_button = ctk.CTkButton(self.layers_frame, text="Delete Layer", command=self.func.remove_layer)
+        self.remove_button.pack(side="bottom", pady=10)
+
         # Место для кнопки сохранения изменений
         self.but_save = ctk.CTkFrame(self.right_panel, width=300, height=300)
         self.but_save.pack(side = "bottom", fill="both", padx=10, pady=5)
@@ -45,14 +48,14 @@ class Window:
         self.btn_save.pack(side="bottom", fill = "x", padx=5, pady=5)
 
         # Слои        
-        self.layers_label = ctk.CTkLabel(self.layers_frame, text="🖼 Layers", font=("Arial", 12, "bold"))
+        self.layers_label = ctk.CTkLabel(self.layers_frame, text="🖼 Layers")
         self.layers_label.pack(pady=5)
 
         # Заменяем Listbox на ScrollableFrame
         self.layers_list = ctk.CTkScrollableFrame(self.layers_frame, height=200)
         self.layers_list.pack(fill="both", expand=True, padx=5, pady=5)
 
-        self.mult_work = ctk.CTkButton(self.but_save, text="SCRIPTS", font=("Arial", 15, "bold"), command=self.func.open_child_window)
+        self.mult_work = ctk.CTkButton(self.but_save, text="Scripts", command=self.func.open_child_window)
         self.mult_work.pack(fill = "x", padx=5, pady=5)
 
         # 🔹 Список слоёв
@@ -91,7 +94,6 @@ class Window:
 
         # Добавляем виджеты и меню из `func`
         self.func.top_menu1()
-        self.func.top_menu2()
         self.func.top_menu3()
         self.func.color_corrections()
         self.func.geometry_transform()

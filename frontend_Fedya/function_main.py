@@ -238,13 +238,48 @@ class ImageProcces_and_TopMenu:
             self.current_layer["scale_flag"] = True
             self._create_scale_slider_frame()
 
+
+    def remove_layer(self):
+        """Удаляет текущий слой."""
+        answer = messagebox.askyesno("Warning", "Do you want to save picture?")
+        if answer:
+            self.save_image()
+
+        if not hasattr(self, "layers") or not self.layers:
+            print("Ошибка: Нет слоев для удаления.")
+            return
+
+        if not hasattr(self, "current_layer"):
+            print("Ошибка: Нет активного слоя.")
+            return
+
+        # Удаляем текущий слой из списка
+        layer_to_remove = self.current_layer
+        self.layers.remove(layer_to_remove)
+
+        # Удаляем кнопку слоя из интерфейса
+        layer_to_remove["button"].destroy()
+        # Если слои остались, выбираем новый текущий слой
+        if self.layers:
+            # Выбираем предыдущий слой (или первый, если удаленный был первым)
+            new_index = max(0, self.layers.index(self.current_layer) - 1)
+            self.current_layer = self.layers[new_index]
+            self.select_layer(self.current_layer)  # Делаем новый слой активным
+        else:
+            # Если слоев не осталось, очищаем текущий слой и холст
+            self.current_layer = None
+            self.window.edited_image = None
+            self.window.canvas.delete("all")  # Очищаем холст
+            print("Все слои удалены.")
+
+
     # Функция отображения изображения на canvas
     def display_image(self, image):
         """Отображает изображение на canvas"""
         if image:
             photo = ImageTk.PhotoImage(image)
             self.window.canvas.delete("all")
-            self.window.canvas.create_image(500, 400, image=photo, anchor="center")
+            self.window.canvas.create_image(600, 400, image=photo, anchor="center")
             self.window.canvas.image = photo  
 
 
@@ -263,19 +298,6 @@ class ImageProcces_and_TopMenu:
             self.save_image()
         elif choice == "🚪 Exit":
             self.button_active()
-
-    def top_menu2(self):
-        options = ["Scale", "Drawing"]
-        self.menu_combobox3 = ctk.CTkComboBox(self.window.top_frame, values=options, command=self.menu_action2)
-        self.menu_combobox3.pack(side="left", padx=2)
-        self.menu_combobox3.set("Function")
-
-    def menu_action2(self, choice):
-        """Обрабатывает выбор из выпадающего списка."""
-        if choice == "Scale":
-            self.create_scale_slider()
-        elif choice == "Drawing":
-            messagebox.showinfo("О нас", "Разработчик: ...")
 
     # 🔹 Меню (General)
     def top_menu3(self):
@@ -412,7 +434,7 @@ class ImageProcces_and_TopMenu:
         
         self.current_layer["br_flag_saved"] = True
 
-# Функция удаления временного файла
+    # Функция удаления временного файла
     def delete_file(self, file_path):
         os.remove(file_path)
 
