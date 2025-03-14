@@ -23,7 +23,7 @@ class Window:
         self.top_frame = ctk.CTkFrame(self.main_frame, fg_color="#424242", width=900, height=40)
         self.top_frame.pack(fill="both")
 
-        self.canvas = ctk.CTkCanvas(self.main_frame, bg="#282828")
+        self.canvas = ctk.CTkCanvas(self.main_frame, bg="white")
         self.canvas.pack(fill="both", expand=True)
 
         # ========== Правая панель ==========
@@ -41,20 +41,19 @@ class Window:
         self.but_save = ctk.CTkFrame(self.right_panel, width=300, height=300)
         self.but_save.pack(side = "bottom", fill="both", padx=10, pady=5)
 
-        self.btn_save = ctk.CTkButton(self.but_save, text="💾 Cохранить изменения", command=self.func.save_difference)
-        self.btn_save.pack(fill = "x", padx=5, pady=5)
+        self.btn_save = ctk.CTkButton(self.but_save, text="💾 Save changes", command=self.func.save_difference)
+        self.btn_save.pack(side="bottom", fill = "x", padx=5, pady=5)
 
         # Слои        
-        self.layers_label = ctk.CTkLabel(self.layers_frame, text="🖼 Слои", font=("Arial", 12, "bold"))
+        self.layers_label = ctk.CTkLabel(self.layers_frame, text="🖼 Layers", font=("Arial", 12, "bold"))
         self.layers_label.pack(pady=5)
 
         # Заменяем Listbox на ScrollableFrame
         self.layers_list = ctk.CTkScrollableFrame(self.layers_frame, height=200)
         self.layers_list.pack(fill="both", expand=True, padx=5, pady=5)
 
-        # 🔹 Кнопка для добавления нового слоя
-        self.add_layer_btn = ctk.CTkButton(self.layers_frame, text="➕ Добавить слой", command=self.func.add_layer)
-        self.add_layer_btn.pack(pady=5)
+        self.mult_work = ctk.CTkButton(self.but_save, text="SCRIPTS", font=("Arial", 15, "bold"), command=self.func.open_child_window)
+        self.mult_work.pack(fill = "x", padx=5, pady=5)
 
         # 🔹 Список слоёв
         self.layers = []  # Хранит данные всех слоёв (изображение, кнопка)
@@ -79,15 +78,24 @@ class Window:
         self.scale_frame = None
         self.solarize_flag = False
         self.contrast_flag = False
-        self.pixel_frame = False
         self.contrast_frame = False
+        self.pixel_flag = False
+        self.pixel_frame = False
+        self.rotation_flag = False
+        self.rotation_frame = False
+        self.horiz_flag = False
+        self.vert_flag = False
+        self.sharpen_flag = False
+        self.noise_flag = False
+        self.noise_frame = False
 
         # Добавляем виджеты и меню из `func`
         self.func.top_menu1()
         self.func.top_menu2()
         self.func.top_menu3()
-        self.func.image_effects()
+        self.func.color_corrections()
         self.func.geometry_transform()
+        self.func.image_effects()
 
     def run(self):
         self.root.mainloop()

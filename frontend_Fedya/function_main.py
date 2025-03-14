@@ -10,6 +10,7 @@ class ImageProcces_and_TopMenu:
         """Принимаем ссылку на `Window`, чтобы работать с GUI."""
         self.window = window
         self.layers = []
+        self.images = []
         self.current_layer = None  
 
     # 💾 Сохранение изображения
@@ -37,7 +38,7 @@ class ImageProcces_and_TopMenu:
         
         self.adjust_brightness(0.7, 1)
         self.save_difference()
-
+        self.current_layer["layer_index"] = len(self.layers)
 
     # Функция конвертации расширения изображения в .png
     def convert_to_png(self, input_path, output_path=None):
@@ -62,7 +63,6 @@ class ImageProcces_and_TopMenu:
             print(f"❌ Ошибка при конвертации: {e}")
             return None
 
-
     # Функция добавления слоя
     def add_layer(self):
         """Создает новый слой и делает его активным"""
@@ -85,7 +85,9 @@ class ImageProcces_and_TopMenu:
             "contrast_value": 1,
             "contrast_flag": False,
             "contrast_frame": False,
-   
+            "rotation_value": 0,
+            "rotation_frame": False,
+            "rotation_flag": False
         }
 
         new_layer["button"] = ctk.CTkButton(
@@ -96,7 +98,112 @@ class ImageProcces_and_TopMenu:
         self.layers.append(new_layer)
         self.select_layer(new_layer)  # Делаем новый слой активным
     
+    def open_child_window(self):
+        # Создаем дочернее окно
+        child_window = ctk.CTkToplevel(self.window.root)
+        child_window.title("SCRIPTS")
+        child_window.geometry("1000x600")
 
+        child_window.grab_set()
+
+        # Добавляем обработчик закрытия окна
+        def on_close():
+            child_window.grab_release()  # Снимаем блокировку
+            child_window.destroy()
+
+        # Левая панель для кнопок эффектов
+        left_frame = ctk.CTkFrame(child_window)
+        left_frame.pack(side="left", padx=10, pady=5, fill="y")
+
+        left_word = ctk.CTkLabel(left_frame, text="Image Effects")
+        left_word.pack(side="top")
+
+        # Список эффектов и соответствующих функций
+        effects = [
+            ("Brightness", self.create_brightness_slider),
+            ("Pixelate", self.create_pixelate_slider),
+            ("Sharpen", self.to_sharpen),
+            ("Contrast", self.create_contrast_slider),
+            ("Grayscale", self.to_black_white),
+            ("Negative", self.invert_colors),
+            ("Sepia", self.to_sepia),
+            ("Solarize", self.to_solarize),
+            ("Horizontal Flip", self.hor_flip),
+            ("Vertical Flip", self.vert_flip),
+            ("Rotation", self.create_rotation_slider),
+            ("Scale", self.create_scale_slider)
+        ]
+
+        # Добавляем кнопки для выбора эффектов
+        for name, func in effects:
+            ctk.CTkButton(
+                left_frame,
+                text=name,
+                command=lambda f=func: self.preview_and_apply(f, child_window)
+            ).pack(pady=2)
+
+        # Кнопка загрузки изображений
+        ctk.CTkButton(
+            left_frame,
+            text="📂 Open",
+            command=lambda: self.load_images(child_window)
+        ).pack(side="bottom", pady=2)
+
+        ctk.CTkButton(left_frame, text="🚪 Exit", command=on_close).pack(side="bottom", pady=2)
+
+
+    def load_images(self, child_window):
+        """Загружает изображения из проводника."""
+        files = filedialog.askopenfilenames(
+            title="Выберите изображения",
+            filetypes=[("Image Files", "*.png *.jpg *.jpeg *.bmp")]
+        )
+        if files:
+            self.images = [Image.open(file) for file in files]
+            print(f"Загружено {len(self.images)} изображений.")
+            self.display_child(child_window, self.images[0])
+        else:
+            print("Изображения не выбраны.")
+
+    def preview_and_apply(self, effect_func, child_window):
+        """Показывает предварительный просмотр и применяет эффект."""
+        if not hasattr(self, "images") or not self.images:
+            print("Ошибка: Нет загруженных изображений.")
+            return
+
+        # Применяем эффект к первому изображению для предпросмотра
+        preview_image = effect_func(self.images[0])
+
+        # Отображаем предварительный просмотр
+        self.display_child(child_window, preview_image)
+
+        # Кнопка для применения эффекта ко всем изображениям
+        apply_button = ctk.CTkButton(
+            child_window,
+            text="Apply to All",
+            command=lambda: self.apply_effect_to_all(effect_func)
+        )
+        apply_button.pack(pady=10)
+
+    def display_child(self, child_window, image):
+        """Отображает изображение на дочернем окне."""
+        if not image:
+            print("Ошибка: Изображение не загружено.")
+            return
+
+        # Преобразуем изображение в формат, подходящий для отображения в Tkinter
+        photo = ImageTk.PhotoImage(image)
+
+        # Создаем Canvas на дочернем окне, если он еще не создан
+        if not hasattr(child_window, "canvas"):
+            child_window.canvas = ctk.CTkCanvas(child_window, width=1000, height=600)
+            child_window.canvas.pack()
+
+        # Очищаем Canvas и отображаем новое изображение
+        child_window.canvas.delete("all")
+        child_window.canvas.create_image(300, 300, image=photo, anchor="center")  # Центрируем изображение
+        child_window.canvas.image = photo  # Сохраняем ссылку на изображение
+        
     # Функция выбора слоя
     def select_layer(self, layer):
         """Выбирает слой и загружает его на canvas."""
@@ -202,17 +309,17 @@ class ImageProcces_and_TopMenu:
                 file_path = os.path.join(folderoutput_path, file_name)
                 self.delete_file(file_path)
 
-     # 🔹 Меню (Effects)
-    def image_effects(self):
+     # 🔹 Меню (Color corrections)
+    def color_corrections(self):
         self.buttons_container = ctk.CTkFrame(self.window.tools_frame, fg_color="#535353")
         self.buttons_container.pack(fill="both", expand=True, padx=5, pady=5)
         
         options = ["Negative", "Grayscale", "Solarize", "Sepia", "Contrast"]
-        self.menu_combobox1 = ctk.CTkComboBox(self.buttons_container, values=options, font=("TimesNewRoman", 15, "bold"), command=self.menu_effects)
+        self.menu_combobox1 = ctk.CTkComboBox(self.buttons_container, values=options, font=("TimesNewRoman", 15, "bold"), command=self.menu_color_corrections)
         self.menu_combobox1.pack(fill="both", padx=2)
-        self.menu_combobox1.set("Image Effects")
+        self.menu_combobox1.set("Color corrections")
 
-    def menu_effects(self, choice):
+    def menu_color_corrections(self, choice):
         """Обрабатывает выбор из выпадающего списка."""
         if choice == "Negative":
             self.invert_colors()
@@ -224,7 +331,8 @@ class ImageProcces_and_TopMenu:
             self.to_sepia()
         elif choice == "Contrast":
             self.create_contrast_slider()
-
+    
+     # 🔹 Меню (Image Transforms)
     def geometry_transform(self):
         self.buttons_container = ctk.CTkFrame(self.window.tools_frame, fg_color="#535353")
         self.buttons_container.pack(fill="both", expand=True, padx=5, pady=5)
@@ -237,14 +345,32 @@ class ImageProcces_and_TopMenu:
     def menu_transforms(self, choice):
         """Обрабатывает выбор из выпадающего списка."""
         if choice == "Rotation":
-            self.invert_colors()
+            self.create_rotation_slider()
         elif choice == "Scaling":
-            self._create_scale_slider_frame()
+            self.create_scale_slider()
         elif choice == "Horizontal flip":
-            self.to_solarize()
+            self.hor_flip()
         elif choice == "Vertical flip":
-            self.to_sepia() 
+            self.vert_flip() 
+        
+    # 🔹 Меню (Effects)
+    def image_effects(self):
+        self.buttons_container = ctk.CTkFrame(self.window.tools_frame, fg_color="#535353")
+        self.buttons_container.pack(fill="both", expand=True, padx=5, pady=5)
+        
+        options = ["Brightness", "Pixelate", "Sharpen"]
+        self.menu_combobox1 = ctk.CTkComboBox(self.buttons_container, values=options, font=("TimesNewRoman", 15, "bold"), command=self.menu_effects)
+        self.menu_combobox1.pack(fill="both", padx=2)
+        self.menu_combobox1.set("Image Effects")
 
+    def menu_effects(self, choice):
+        """Обрабатывает выбор из выпадающего списка."""
+        if choice == "Brightness":
+            self.create_brightness_slider()
+        elif choice == "Pixelate":
+            self.create_pixelate_slider()
+        elif choice == "Sharpen":
+            self.to_sharpen()
         
     # Функция для сохранение изменений
     def save_difference(self):
@@ -253,13 +379,37 @@ class ImageProcces_and_TopMenu:
         self.window.negative_flag = False
         self.window.sepia_flag = False
         self.window.grayscale_flag = False
-        self.window.brightness_frame.destroy()
+        if self.window.brightness_frame:
+            self.window.brightness_frame.destroy()
+        if self.window.scale_frame:
+            self.window.scale_frame.destroy()
+        if self.window.pixel_frame:
+            self.window.pixel_frame.destroy()
+        if self.window.contrast_frame:
+            self.window.contrast_frame.destroy()
+        if self.window.rotation_frame:
+            self.window.rotation_frame.destroy()
+        self.window.scale_frame = None
+        self.window.scale_flag = False
+        self.window.pixel_frame = None
+        self.window.pixel_flag = False
+        self.window.contrast_frame = None
+        self.window.contrast_flag = False
+        self.window.rotation_frame = None
+        self.window.rotation_flag = False
         self.window.brightness_frame = None
         self.window.brightness_flag = False
         self.current_layer["bright_flag"] = False
         self.current_layer["bright_frame"] = False
         self.current_layer["scale_flag"] = False
         self.current_layer["scale_frame"] = False
+        self.current_layer["pixel_frame"] = False
+        self.current_layer["pixel_flag"] = False
+        self.current_layer["contrast_frame"] = False
+        self.current_layer["contrast_flag"] = False
+        self.current_layer["rotation_frame"] = False
+        self.current_layer["rotation_flag"] = False
+        
         self.current_layer["br_flag_saved"] = True
 
 # Функция удаления временного файла
@@ -425,7 +575,7 @@ class ImageProcces_and_TopMenu:
 
             try:
                 subprocess.run([
-                    "./backend_Erbol/Function/ImageProcessing/Brightness/brightness",
+                    "./backend_Erbol/Function/ImageEffects/Brightness/brightness",
                     image_path,
                     output_path,
                     str(factor)
@@ -631,7 +781,7 @@ class ImageProcces_and_TopMenu:
                 # Выполняем Haskell-скрипт
                 try:
                     result = subprocess.run([
-                        "./backend_Erbol/Function/ImageProcessing/Pixelate/pixelate",
+                        "./backend_Erbol/Function/ImageEffects/Pixelate/pixelate",
                         image_path,
                         output_path,
                         str(factor)  # Теперь передаем целое число
@@ -696,7 +846,7 @@ class ImageProcces_and_TopMenu:
             try:
                 self.window.pixel_frame = ctk.CTkFrame(
                     self.window.right_panel,
-                    height=300,
+                    height=200,
                     width=300
                 )
                 self.window.pixel_frame.pack(pady=10)
@@ -815,7 +965,7 @@ class ImageProcces_and_TopMenu:
             try:
                 self.window.contrast_frame = ctk.CTkFrame(
                     self.window.right_panel,
-                    height=300,
+                    height=200,
                     width=300
                 )
                 self.window.contrast_frame.pack(pady=10)
@@ -843,3 +993,263 @@ class ImageProcces_and_TopMenu:
 
             except Exception as e:
                 print(f"Ошибка при создании ползунка: {e}")
+
+
+    def adjust_rotation(self, value):
+        if self.current_layer and self.current_layer["image"]:
+            try:
+                # Округляем значение до двух знаков после запятой
+                factor = round(float(value), 2)
+                
+                # Проверяем минимальное изменение
+                if abs(factor - self.current_layer.get("rotation_value", 1.0)) < 0.01:
+                    return
+                    
+                self.current_layer["rotation_value"] = factor
+
+                # Создаем необходимые директории
+                image_path = "temp/inputPath/input_rotation.png"
+                output_path = "temp/outputPath/output_rotation.png"
+                os.makedirs(os.path.dirname(image_path), exist_ok=True)
+                os.makedirs(os.path.dirname(output_path), exist_ok=True)
+
+                # Сохраняем копию изображения
+                self.current_layer["copy"].save(image_path)
+
+                # Выполняем Haskell-скрипт
+                try:
+                    result = subprocess.run([
+                        "./backend_Erbol/Function/ImageTransform/Rotation/rotation",
+                        image_path,
+                        output_path,
+                        str(factor)
+                    ], capture_output=True, text=True, check=True, timeout=10)
+                    
+                except subprocess.TimeoutExpired:
+                    raise RuntimeError("Haskell-процесс превысил время ожидания")
+                except subprocess.CalledProcessError as e:
+                    error_msg = f"Ошибка выполнения Haskell: {e}\nstdout: {e.stdout}\nstderr: {e.stderr}"
+                    raise RuntimeError(error_msg)
+
+                # Проверяем существование выходного файла
+                if not os.path.exists(output_path):
+                    raise FileNotFoundError(f"Файл {output_path} не был создан!")
+
+                # Открываем и обрабатываем результат
+                with Image.open(output_path) as img:
+                    filtered_image = img.copy()
+
+                # Обновляем данные слоя
+                self.current_layer["image"] = filtered_image
+                self.window.edited_image = filtered_image
+                self.display_image(filtered_image)
+
+            except Exception as e:
+                print(f"Ошибка в adjust_rotation: {str(e)}")
+            finally:
+                # Удаляем временные файлы в любом случае
+                for path in [image_path, output_path]:
+                    try:
+                        if os.path.exists(path):
+                            os.remove(path)
+                    except Exception as e:
+                        print(f"Ошибка при удалении {path}: {e}")
+        else:
+            # Логика закрытия окна ползунка
+            if getattr(self.window, "rotation_frame", None):
+                self.window.rotation_frame.destroy()
+                self.window.rotation_frame = None
+            self.current_layer["rotation_flag"] = False
+            self.current_layer["rotation_frame"] = False
+
+    def create_rotation_slider(self):
+        """Создаёт окно с ползунком."""
+        def on_slider_release(event):
+            try:
+                # Округляем значение до целого
+                value = float(rotation_slider.get())
+                if -180 <= value <= 180:
+                    self.adjust_rotation(value)
+                else:
+                    print("Значение должно быть между -180 и 180")
+            except ValueError:
+                print("Неверное значение")
+
+        if self.current_layer.get("rotation_flag", False):
+            if getattr(self.window, "rotation_frame", None):
+                self.window.rotation_frame.destroy()
+                self.window.rotation_frame = None
+                self.current_layer["rotation_flag"] = False
+        else:
+            try:
+                self.window.rotation_frame = ctk.CTkFrame(
+                    self.window.right_panel,
+                    height=200,
+                    width=300
+                )
+                self.window.rotation_frame.pack(pady=10)
+
+                initial_value = self.current_layer.get("rotation_value", 1)
+                rotation_slider = ctk.CTkSlider(
+                    master=self.window.rotation_frame,
+                    from_=-180,
+                    to=180,
+                    number_of_steps = 1080 
+                )
+
+                # Текстовая метка
+                ctk.CTkLabel(
+                    self.window.rotation_frame,
+                    text="Угол (-180° - +180°)"
+                ).pack(pady=2)
+
+                rotation_slider.pack(pady=10)
+                rotation_slider.set(initial_value)
+                rotation_slider.bind("<ButtonRelease-1>", on_slider_release)
+
+                self.current_layer["rotation_flag"] = True
+                self.current_layer["rotation_frame"] = True
+
+            except Exception as e:
+                print(f"Ошибка при создании ползунка: {e}")
+
+
+    def hor_flip(self):
+        """Инвертирует цвета изображения, используя Haskell (Negative.hs)."""
+        if self.current_layer and self.current_layer["image"]:
+            image_path = "temp/inputPath/input_horizFlip.png"
+            output_path = "temp/outputPath/output_horizFlip.png"
+            # Создаем временную папку, если её нет
+            os.makedirs("temp", exist_ok=True)
+            # Сохраняем текущее изображение для обработки
+            self.current_layer["copy"].save(image_path)
+            if self.window.horiz_flag:
+                # Возвращаем оригинал изображения
+                self.current_layer["image"] = self.current_layer["copy"]
+                self.window.horiz_flag = False
+            else:
+                try:
+                    # Вызываем Haskell-программу Negative.hs с помощью runhaskell
+                    subprocess.run([
+                        "./backend_Erbol/Function/ImageTransform/HorizontalFlip/horizontalFlip",
+                        image_path,
+                        output_path
+                    ], check=True)
+                    
+                    # Загружаем обработанное изображение
+                    with Image.open(output_path) as img:
+                        filtered_image = img.copy()  # Копируем изображение в память
+                    
+                    # Удаляем временный файл
+                    self.delete_file(output_path)
+                    self.delete_file(image_path)
+
+                    # Обновляем изображение в слое
+                    self.current_layer["image"] = filtered_image
+                    self.window.edited_image = filtered_image
+                    self.window.horiz_flag = True
+                except subprocess.CalledProcessError as e:
+                    print(f"Ошибка при вызове Haskell-фильтра: {e}")
+            # Обновляем отображение
+            self.display_image(self.current_layer["image"])
+
+
+    def vert_flip(self):
+        """Инвертирует цвета изображения, используя Haskell (Negative.hs)."""
+        if self.current_layer and self.current_layer["image"]:
+            # Создаем временные пути
+            input_dir = "temp/inputPath"
+            output_dir = "temp/outputPath"
+            image_path = os.path.join(input_dir, "input_vertFlip.png")
+            output_path = os.path.join(output_dir, "output_vertFlip.png")
+
+            # Создаем временные папки, если их нет
+            os.makedirs(input_dir, exist_ok=True)
+            os.makedirs(output_dir, exist_ok=True)
+
+            # Сохраняем текущее изображение для обработки
+            self.current_layer["copy"].save(image_path)
+
+            if self.window.vert_flag:
+                # Возвращаем оригинал изображения
+                self.current_layer["image"] = self.current_layer["copy"]
+                self.window.vert_flag = False
+            else:
+                try:
+                    # Вызываем Haskell-программу VerticalFlip.hs
+                    subprocess.run([
+                        "./backend_Erbol/Function/ImageTransform/VerticalFlip/verticalFlip",
+                        image_path,
+                        output_path
+                    ], check=True)
+
+                    # Загружаем обработанное изображение
+                    with Image.open(output_path) as img:
+                        filtered_image = img.copy()  # Копируем изображение в память
+
+                    # Удаляем временные файлы
+                    self.delete_file(output_path)
+                    self.delete_file(image_path)
+
+                    # Обновляем изображение в слое
+                    self.current_layer["image"] = filtered_image
+                    self.window.edited_image = filtered_image
+                    self.window.vert_flag = True
+                except subprocess.CalledProcessError as e:
+                    print(f"Ошибка при вызове Haskell-фильтра: {e}")
+                except Exception as e:
+                    print(f"Ошибка: {e}")
+
+            # Обновляем отображение
+            self.display_image(self.current_layer["image"])
+    
+    def to_sharpen(self):
+        """Применяет эффект повышения резкости, используя Haskell (Sharpen.hs)."""
+        if self.current_layer and self.current_layer["image"]:
+            # Создаем временные пути
+            input_dir = "temp/inputPath"
+            output_dir = "temp/outputPath"
+            image_path = os.path.join(input_dir, "input_sharpen.png")
+            output_path = os.path.join(output_dir, "output_sharpen.png")
+
+            # Создаем временные папки, если их нет
+            os.makedirs(input_dir, exist_ok=True)
+            os.makedirs(output_dir, exist_ok=True)
+
+            # Сохраняем текущее изображение для обработки
+            self.current_layer["copy"].save(image_path)
+
+            if self.window.sharpen_flag:
+                # Возвращаем оригинал изображения
+                self.current_layer["image"] = self.current_layer["copy"]
+                self.window.sharpen_flag = False
+            else:
+                try:
+                    # Вызываем Haskell-программу Sharpen.hs
+                    subprocess.run([
+                        "./backend_Erbol/Function/ImageEffects/Sharpen/sharpen",
+                        image_path,
+                        output_path
+                    ], check=True)
+
+                    # Загружаем обработанное изображение
+                    with Image.open(output_path) as img:
+                        filtered_image = img.copy()  # Копируем изображение в память
+
+                    # Удаляем временные файлы
+                    self.delete_file(output_path)
+                    self.delete_file(image_path)
+
+                    # Обновляем изображение в слое
+                    self.current_layer["image"] = filtered_image
+                    self.window.edited_image = filtered_image
+                    self.window.sharpen_flag = True
+                except subprocess.CalledProcessError as e:
+                    print(f"Ошибка при вызове Haskell-фильтра (sharpen): {e}")
+                except FileNotFoundError as e:
+                    print(f"Файл не найден: {e}")
+                except Exception as e:
+                    print(f"Неизвестная ошибка: {e}")
+
+            # Обновляем отображение
+            self.display_image(self.current_layer["image"])

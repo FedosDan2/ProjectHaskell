@@ -2,15 +2,19 @@ module Main where
 
 import System.Environment (getArgs)
 import System.FilePath (takeFileName, replaceExtension, combine)
-import ImageProcessing.Brightness.Brightness (adjustBrightness)
+import ImageEffects.Brightness.Brightness (adjustBrightness)
 import ImageProcessing.Grayscale.Grayscale (applyGrayscale)
 import ImageProcessing.Negative.Negative (applyNegative)
 import ImageProcessing.Sepia.Sepia (applySepia)
 import ImageProcessing.Solarize.Solarize (applySolarize)
 import ImageTransform.Scale.Scale (scaleImage) 
-import ImageProcessing.Pixelate.Pixelate (applyPixelate)
+import ImageEffects.Pixelate.Pixelate (applyPixelate)
 import ImageProcessing.Contrast.Contrast (applyContrast)
 import ImageTransform.Rotation.Rotation (applyRotate)
+import ImageTransform.HorizontalFlip.HorizontalFlip (applyHorizontalFlip)
+import ImageTransform.VerticalFlip.VerticalFlip (applyVerticalFlip)
+import ImageEffects.Sharpen.Sharpen (applySharpen)
+import ImageEffects.Noise.Noise (applyNoise)
 import Codec.Picture
 
 main :: IO ()
@@ -31,5 +35,11 @@ main = do
                 "brightness" -> adjustBrightness inputPath outputPath 1.5
                 "solarize" -> applySolarize inputPath outputPath
                 "scale" -> scaleImage inputPath outputPath 1.5
+                "contrast" -> applyContrast inputPath outputPath 1.5
+                "pixel" -> applyPixelate inputPath outputPath 5
+                "rotation" -> applyRotate inputPath outputPath 80
+                "vert_flip" -> applyVerticalFlip inputPath outputPath 
+                "horiz_flip" -> applyHorizontalFlip inputPath outputPath 
+
                 _ -> putStrLn "Неизвестный тип фильтра."
         _ -> putStrLn "Использование: <input> <filter> <outputDir>"
