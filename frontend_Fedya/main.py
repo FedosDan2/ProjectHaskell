@@ -1,7 +1,5 @@
 import customtkinter as ctk
-from function_main import ImageProcces_and_TopMenu
-from tkinter import filedialog, messagebox
-from PIL import Image, ImageTk, ImageEnhance, ImageOps
+from function_main import ImageProcces_and_TopMenu  # Импорт из общего модуля
 
 class Window:
     def __init__(self, main_icon="resourses/icon.ico"):
