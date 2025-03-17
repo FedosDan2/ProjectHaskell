@@ -60,8 +60,52 @@ class Window:
         self.layers = []  # Хранит данные всех слоёв (изображение, кнопка)
         self.current_layer = None
         
-        # Разделение панели инструментов
-        
+        # Кнопки движения фото в осям
+        self.y_move = ctk.CTkFrame(self.canvas, fg_color="light gray", width=30)
+        self.y_move.pack(side="right", fill="y")
+
+        self.x_move = ctk.CTkFrame(self.canvas, fg_color="light gray", height=30)
+        self.x_move.pack(side="bottom", fill="x")
+
+        self.btn_left_x_move = ctk.CTkButton(
+                self.x_move, 
+                fg_color="#535353", 
+                text="⬅️", 
+                command= lambda: self.func.x_move(-15),
+                width=20,
+                height=20
+            )
+        self.btn_left_x_move.pack(side="left")
+
+        self.btn_right_x_move = ctk.CTkButton(
+                self.x_move, 
+                fg_color="#535353", 
+                text="➡️", 
+                command= lambda: self.func.x_move(15),
+                width=20,
+                height=20
+            )
+        self.btn_right_x_move.pack(side="right")
+
+        self.btn_top_y_move = ctk.CTkButton(
+                self.y_move, 
+                fg_color="#535353", 
+                text="⬆️", 
+                command= lambda: self.func.y_move(-15),
+                width=20,
+                height=20
+            )
+        self.btn_top_y_move.pack(side="top")
+
+        self.btn_bottom_y_move = ctk.CTkButton(
+                self.y_move, 
+                fg_color="#535353", 
+                text="⬇️", 
+                command= lambda: self.func.y_move(15),
+                width=20,
+                height=20
+            )
+        self.btn_bottom_y_move.pack(side="bottom")
 
         # 🖼 Переменные для изображений
         self.image = None

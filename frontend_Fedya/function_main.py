@@ -97,7 +97,9 @@ class ImageProcces_and_TopMenu:
             "contrast_frame": False,
             "rotation_value": 0,
             "rotation_frame": False,
-            "rotation_flag": False
+            "rotation_flag": False,
+            "position_x": 0,
+            "position_y": 0            
         }
 
         new_layer["button"] = ctk.CTkButton(
@@ -336,6 +338,7 @@ class ImageProcces_and_TopMenu:
         self.current_layer["contrast_flag"] = False
         self.current_layer["rotation_frame"] = False
         self.current_layer["rotation_flag"] = False
+        
         
         self.current_layer["br_flag_saved"] = True
 
@@ -1553,3 +1556,88 @@ class ImageProcces_and_TopMenu:
 
         self.current_image_index = (self.current_image_index - 1) % len(self.mult_images)
         self.display_mult_image(self.mult_images[self.current_image_index])
+
+
+
+
+
+    def x_move(self, x_offset):
+        """Перемещает изображение по горизонтали (X)"""
+        if self.mult_process_on:
+            for i in range(len(self.mult_images)):
+                self.mult_images[i] = self.func_helper._apply_X_filter(self.mult_images[i], i, x_offset)
+            self.display_mult_image(self.mult_images[self.current_image_index])
+        else:
+            if self.current_layer and self.current_layer["image"]:
+                try:
+                    # Накопительное смещение
+                    self.current_layer["position_x"] = self.current_layer.get("position_x", 0) + x_offset
+
+                    # Применяем фильтр перемещения
+                    self.current_layer["image"] = self.func_helper._apply_X_filter(
+                        self.current_layer["copy"], 0, self.current_layer["position_x"]
+                    )
+
+                    # Проверяем и создаем директории
+                    os.makedirs("temp/move/input", exist_ok=True)
+                    os.makedirs("temp/move/output", exist_ok=True)
+
+                    image_path = f"temp/move/input/picture_moveX_0.png"
+                    output_path = f"temp/move/output/picture_moveX_0.png"
+
+                    # Проверяем существование файла перед удалением
+                    if os.path.exists(image_path):
+                        self.delete_file(image_path)
+                    else:
+                        print(f"Файл {image_path} не найден, пропускаем удаление")
+
+                    if os.path.exists(output_path):
+                        self.delete_file(output_path)
+                    else:
+                        print(f"Файл {output_path} не найден, пропускаем удаление")
+
+                    # Обновляем отображение
+                    self.display_image(self.current_layer["image"])
+                except Exception as e:
+                    print(f"Ошибка в x_move: {str(e)}")
+
+
+    def y_move(self, y_offset):
+        """Перемещает изображение по горизонтали (X)"""
+        if self.mult_process_on:
+            for i in range(len(self.mult_images)):
+                self.mult_images[i] = self.func_helper._apply_Y_filter(self.mult_images[i], i, y_offset)
+            self.display_mult_image(self.mult_images[self.current_image_index])
+        else:
+            if self.current_layer and self.current_layer["image"]:
+                try:
+                    # Накопительное смещение
+                    self.current_layer["position_y"] = self.current_layer.get("position_y", 0) + y_offset
+
+                    # Применяем фильтр перемещения
+                    self.current_layer["image"] = self.func_helper._apply_Y_filter(
+                        self.current_layer["copy"], 0, self.current_layer["position_y"]
+                    )
+
+                    # Проверяем и создаем директории
+                    os.makedirs("temp/move/input", exist_ok=True)
+                    os.makedirs("temp/move/output", exist_ok=True)
+
+                    image_path = f"temp/move/input/picture_moveY_0.png"
+                    output_path = f"temp/move/output/picture_moveY_0.png"
+
+                    # Проверяем существование файла перед удалением
+                    if os.path.exists(image_path):
+                        self.delete_file(image_path)
+                    else:
+                        print(f"Файл {image_path} не найден, пропускаем удаление")
+
+                    if os.path.exists(output_path):
+                        self.delete_file(output_path)
+                    else:
+                        print(f"Файл {output_path} не найден, пропускаем удаление")
+
+                    # Обновляем отображение
+                    self.display_image(self.current_layer["image"])
+                except Exception as e:
+                    print(f"Ошибка в y_move: {str(e)}")

@@ -377,3 +377,64 @@ class Helper_Function:
         except subprocess.CalledProcessError as e:
             print(f"Ошибка при вызове Haskell-фильтра (Rotation): {e}")
             return image  # Возвращаем оригинальное изображение в случае ошибки
+        
+
+
+    def _apply_X_filter(self, image, index, x_offset):
+        """Применяет фильтр перемещения к изображению, используя Haskell (Move.hs)."""
+        image_path = f"temp/move/input/picture_moveX_{index}.png"
+        output_path = f"temp/move/output/picture_moveX_{index}.png"
+
+        # Создаем временную папку, если её нет
+        os.makedirs("temp", exist_ok=True)
+
+        # Сохраняем изображение для обработки
+        image.save(image_path)
+
+        try:
+            # Вызываем Haskell-программу Move.hs
+            subprocess.run([
+                "./backend_Erbol/Function/ImageTransform/Move/horizontal",
+                image_path,
+                output_path,
+                str(x_offset),
+            ], check=True)
+
+            # Загружаем обработанное изображение
+            with Image.open(output_path) as img:
+                moved_image = img.copy()
+
+            return moved_image
+        except subprocess.CalledProcessError as e:
+            print(f"Ошибка при вызове Haskell-фильтра (Move): {e}")
+            return image  # Возвращаем оригинальное изображение в случае ошибки
+
+
+    def _apply_Y_filter(self, image, index, y_offset):
+        """Применяет фильтр перемещения к изображению, используя Haskell (Move.hs)."""
+        image_path = f"temp/move/input/picture_moveY_{index}.png"
+        output_path = f"temp/move/output/picture_moveY_{index}.png"
+
+        # Создаем временную папку, если её нет
+        os.makedirs("temp", exist_ok=True)
+
+        # Сохраняем изображение для обработки
+        image.save(image_path)
+
+        try:
+            # Вызываем Haskell-программу Move.hs
+            subprocess.run([
+                "./backend_Erbol/Function/ImageTransform/Move/vertical",
+                image_path,
+                output_path,
+                str(y_offset),
+            ], check=True)
+
+            # Загружаем обработанное изображение
+            with Image.open(output_path) as img:
+                moved_image = img.copy()
+
+            return moved_image
+        except subprocess.CalledProcessError as e:
+            print(f"Ошибка при вызове Haskell-фильтра (Move): {e}")
+            return image  # Возвращаем оригинальное изображение в случае ошибки
