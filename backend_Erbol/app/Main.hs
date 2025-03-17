@@ -14,7 +14,8 @@ import ImageTransform.Rotation.Rotation (applyRotate)
 import ImageTransform.HorizontalFlip.HorizontalFlip (applyHorizontalFlip)
 import ImageTransform.VerticalFlip.VerticalFlip (applyVerticalFlip)
 import ImageEffects.Sharpen.Sharpen (applySharpen)
-import ImageEffects.Noise.Noise (applyNoise)
+import ImageTransform.Move.Vertical (applyMoveVertical)
+import ImageTransform.Move.Horizontal (applyMoveHorizontal)
 import Codec.Picture
 
 main :: IO ()

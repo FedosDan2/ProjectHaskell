@@ -24,6 +24,10 @@ C:\Users\fedya\HaskProj\backend_Erbol\Function\ImageProcessing\Solarize\Solarize
   hash: 33f9f6e9695ed622db7d8f42fc027dfe4fdbfd6ab2e64cccaff97f95ea7a650a
 C:\Users\fedya\HaskProj\backend_Erbol\Function\ImageTransform\HorizontalFlip\HorizontalFlip.hs:
   hash: e58bfcc93c242594b0deea5689c1b9979fae755adcc1da20a7bb77505f0fccc7
+C:\Users\fedya\HaskProj\backend_Erbol\Function\ImageTransform\Move\Horizontal.hs:
+  hash: 179d915ea6f3bf7923cc4b95d2909b6107d5bd52ab15e00a337e39d8fd7b8446
+C:\Users\fedya\HaskProj\backend_Erbol\Function\ImageTransform\Move\Vertical.hs:
+  hash: cc6dc8d71eca9211a194a3dae75b91dfd618364ea73e93a1dc9eba33c59b2d6a
 C:\Users\fedya\HaskProj\backend_Erbol\Function\ImageTransform\Rotation\Rotation.hs:
   hash: c96829f9abba5723904e3a78cbd09fa15d37ccab6758b8a4cc9fb4e501cfabb9
 C:\Users\fedya\HaskProj\backend_Erbol\Function\ImageTransform\Scale\Scale.hs:
@@ -33,7 +37,7 @@ C:\Users\fedya\HaskProj\backend_Erbol\Function\ImageTransform\VerticalFlip\Verti
 C:\Users\fedya\HaskProj\backend_Erbol\Function\Utils.hs:
   hash: 4d2a3692ee79fdad18da07e26738e0570e50bab322f935bffe16618184f73b46
 C:\Users\fedya\HaskProj\backend_Erbol\HaskProj.cabal:
-  hash: 0f64ad700b2ace64c4d66a0d91eacf3dcebdc35dffaf8db6d9cbef945d00ab30
+  hash: 38b6a8a590a0e2c1a92a83b3fecfd35969812ba848d2f935f550528e8b6f3c8b
 C:\Users\fedya\HaskProj\backend_Erbol\README.md:
   hash: 6436ea6d6c6dfd7af4e152ce65a66a33917d01af7b8d04d826bb90372877475b
 C:\Users\fedya\HaskProj\backend_Erbol\package.yaml:

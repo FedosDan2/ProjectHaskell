@@ -34,6 +34,8 @@ library
       ImageProcessing.Sepia.Sepia
       ImageProcessing.Solarize.Solarize
       ImageTransform.HorizontalFlip.HorizontalFlip
+      ImageTransform.Move.Horizontal
+      ImageTransform.Move.Vertical
       ImageTransform.Rotation.Rotation
       ImageTransform.Scale.Scale
       ImageTransform.VerticalFlip.VerticalFlip

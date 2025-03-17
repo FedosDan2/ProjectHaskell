@@ -1,4 +1,4 @@
-module Main where
+module ImageTransform.Move.Vertical where
 
 import Codec.Picture
 import System.Environment (getArgs)
