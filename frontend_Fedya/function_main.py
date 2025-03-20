@@ -1,10 +1,10 @@
-import customtkinter as ctk
 from tkinter import filedialog, messagebox
 from PIL import Image, ImageTk, ImageEnhance, ImageOps
 import subprocess
 import os
 from function_main_helper import Helper_Function
 from common import ImageProcces_and_TopMenu
+import customtkinter as ctk
 
 class ImageProcces_and_TopMenu:
     def __init__(self, window):
@@ -359,10 +359,10 @@ class ImageProcces_and_TopMenu:
             self.display_mult_image(self.mult_images[self.current_image_index])
         else:
             if self.current_layer and self.current_layer["image"]:
-                image_path = "temp/inputPath/input_invert.png"
-                output_path = "temp/outputPath/output_invert.png"
+                image_path = "HaskProj/temp/inputPath/input_invert.png"
+                output_path = "HaskProj/temp/outputPath/output_invert.png"
                 # Создаем временную папку, если её нет
-                os.makedirs("temp", exist_ok=True)
+                os.makedirs("HaskProj", exist_ok=True)
                 # Сохраняем текущее изображение для обработки
                 self.current_layer["copy"].save(image_path)
                 if self.window.negative_flag:
@@ -407,9 +407,9 @@ class ImageProcces_and_TopMenu:
             self.display_mult_image(self.mult_images[self.current_image_index])
         else:
             if self.current_layer and self.current_layer["image"]:
-                image_path = "temp/inputPath/input_bw.png"
-                output_path = "temp/outputPath/output_bw.png"
-                os.makedirs("temp", exist_ok=True)
+                image_path = "HaskProj/temp/inputPath/input_bw.png"
+                output_path = "HaskProj/temp/outputPath/output_bw.png"
+                os.makedirs("HaskProj", exist_ok=True)
                 self.current_layer["copy"].save(image_path)
                 if self.window.grayscale_flag:
                     self.current_layer["image"] = self.current_layer["copy"]
@@ -449,9 +449,9 @@ class ImageProcces_and_TopMenu:
             self.display_mult_image(self.mult_images[self.current_image_index])
         else:
             if self.current_layer and self.current_layer["image"]:
-                image_path = "temp/inputPath/input_solarize.png"
-                output_path = "temp/outputPath/output_solarize.png"
-                os.makedirs("temp", exist_ok=True)
+                image_path = "HaskProj/temp/inputPath/input_solarize.png"
+                output_path = "HaskProj/temp/outputPath/output_solarize.png"
+                os.makedirs("HaskProj", exist_ok=True)
                 self.current_layer["copy"].save(image_path)
                 if self.window.solarize_flag:
                     self.current_layer["image"] = self.current_layer["copy"]
@@ -491,9 +491,9 @@ class ImageProcces_and_TopMenu:
             self.display_mult_image(self.mult_images[self.current_image_index])
         else:
             if self.current_layer and self.current_layer["image"]:
-                image_path = "temp/inputPath/input_sepia.png"
-                output_path = "temp/outputPath/output_sepia.png"
-                os.makedirs("temp", exist_ok=True)
+                image_path = "HaskProj/temp/inputPath/input_sepia.png"
+                output_path = "HaskProj/temp/outputPath/output_sepia.png"
+                os.makedirs("HaskProj", exist_ok=True)
                 self.current_layer["copy"].save(image_path)
                 if self.window.sepia_flag:
                     self.current_layer["image"] = self.current_layer["copy"]
@@ -539,9 +539,9 @@ class ImageProcces_and_TopMenu:
                     return  # Изменение слишком мало для обработки
                 self.current_layer["brightness_value"] = factor
 
-                image_path = "temp/inputPath/input_brightness.png"
-                output_path = "temp/outputPath/output_brightness.png"
-                os.makedirs("temp", exist_ok=True)
+                image_path = "HaskProj/temp/inputPath/input_brightness.png"
+                output_path = "HaskProj/temp/outputPath/output_brightness.png"
+                os.makedirs("HaskProj", exist_ok=True)
                 self.current_layer["copy"].save(image_path)
 
                 try:
@@ -1164,10 +1164,10 @@ class ImageProcces_and_TopMenu:
         else:
             # Обработка одног
             if self.current_layer and self.current_layer["image"]:
-                image_path = "temp/inputPath/input_horizFlip.png"
-                output_path = "temp/outputPath/output_horizFlip.png"
+                image_path = "HaskProj/temp/inputPath/input_horizFlip.png"
+                output_path = "HaskProj/temp/outputPath/output_horizFlip.png"
                 # Создаем временную папку, если её нет
-                os.makedirs("temp", exist_ok=True)
+                os.makedirs("HaskProj", exist_ok=True)
                 # Сохраняем текущее изображение для обработки
                 self.current_layer["copy"].save(image_path)
                 if self.window.horiz_flag:
@@ -1213,8 +1213,8 @@ class ImageProcces_and_TopMenu:
         else:
             if self.current_layer and self.current_layer["image"]:
                 # Создаем временные пути
-                input_dir = "temp/inputPath"
-                output_dir = "temp/outputPath"
+                input_dir = "HaskProj/temp/inputPath"
+                output_dir = "HaskProj/temp/outputPath"
                 image_path = os.path.join(input_dir, "input_vertFlip.png")
                 output_path = os.path.join(output_dir, "output_vertFlip.png")
 
@@ -1270,8 +1270,8 @@ class ImageProcces_and_TopMenu:
         else:
             if self.current_layer and self.current_layer["image"]:
                 # Создаем временные пути
-                input_dir = "temp/inputPath"
-                output_dir = "temp/outputPath"
+                input_dir = "HaskProj/temp/inputPath"
+                output_dir = "HaskProj/temp/outputPath"
                 image_path = os.path.join(input_dir, "input_sharpen.png")
                 output_path = os.path.join(output_dir, "output_sharpen.png")
 
@@ -1318,7 +1318,6 @@ class ImageProcces_and_TopMenu:
                 self.display_image(self.current_layer["image"])
 
 
-
     # Множественная обработка фото
     def open_child_window(self):
 
@@ -1356,24 +1355,36 @@ class ImageProcces_and_TopMenu:
             self.window.canvas.delete("all")
             self.mult_process_on = True
 
+            self.button_down_frame = ctk.CTkFrame(self.window.canvas, fg_color="white")
+            self.button_down_frame.pack(side="bottom", pady=10)
+            
             # Проверяем, были ли кнопки уже созданы
             if not hasattr(self, "mult_load") or self.mult_load.winfo_exists() == 0:
                 # Если кнопка не существует, создаём её
                 self.mult_load = ctk.CTkButton(
-                    self.window.canvas,
+                    self.button_down_frame,
                     text="📂 Open",
                     command=self.load_images
                 )
-                self.mult_load.pack(side="bottom", pady=2)
+                self.mult_load.grid(row=0, column=0, padx=5)
 
             if not hasattr(self, "mult_close") or self.mult_close.winfo_exists() == 0:
                 # Если кнопка не существует, создаём её
                 self.mult_close = ctk.CTkButton(
-                    self.window.canvas,
+                    self.button_down_frame,
                     text="🚪 Exit",
                     command=self.on_close
                 )
-                self.mult_close.pack(side="bottom", pady=2)
+                self.mult_close.grid(row=0, column=1, padx=5)
+
+            if not hasattr(self, "mult_delete") or self.mult_delete.winfo_exists() == 0:
+                # Если кнопка не существует, создаём её
+                self.mult_delete = ctk.CTkButton(
+                    self.button_down_frame,
+                    text="🗑 Delete all",
+                    command=self.delete_all
+                )
+                self.mult_delete.grid(row=0, column=2, padx=5)
 
             # Устанавливаем флаг, что кнопки созданы
             self.buttons_created = True
@@ -1388,12 +1399,35 @@ class ImageProcces_and_TopMenu:
         )
         if files:
             self.mult_images = []  # Инициализируем список для хранения изображений
-            input_dir = "temp/multiplProcess/input"
+            input_dir = "HaskProj/temp/multiplProcess/input"
             os.makedirs(input_dir, exist_ok=True)  # Создаем временную папку, если её нет
 
             for index, file in enumerate(files):
                 image = Image.open(file)
-                self.mult_images.append(image)  # Добавляем изображение в список
+                new_image = {
+                    "image": image.copy() if image else None,
+                    "brightness_value": 1.0,  # Значение по умолчанию
+                    "copy": image.copy() if image else None,  # Храним оригинал слоя
+                    "scale_value": 1.0,
+                    "bright_flag": False,
+                    "scale_flag": False,
+                    "scale_frame": False,
+                    "bright_frame": False,
+                    "br_flag_saved": True,
+                    "pixel_value": 1,
+                    "pixel_flag": False,
+                    "pixel_frame": False,
+                    "pixel_flag_saved": True,
+                    "contrast_value": 1,
+                    "contrast_flag": False,
+                    "contrast_frame": False,
+                    "rotation_value": 0,
+                    "rotation_frame": False,
+                    "rotation_flag": False,
+                    "position_x": 0,
+                    "position_y": 0            
+                }
+                self.mult_images.append(new_image)  # Добавляем изображение в список
 
                 # Сохраняем изображение во временную папку
                 image_path = os.path.join(input_dir, f"input_{index + 1}.png")
@@ -1408,12 +1442,12 @@ class ImageProcces_and_TopMenu:
 
         if len(self.mult_images) > 1:
             # Создаем фрейм для кнопок
-            button_frame = ctk.CTkFrame(self.window.canvas, fg_color="white")
-            button_frame.pack(side="top", pady=10)
+            self.button_frame = ctk.CTkFrame(self.window.canvas, fg_color="white")
+            self.button_frame.pack(side="top", pady=10)
 
             # Кнопка "Назад"
             self.prev_button = ctk.CTkButton(
-                button_frame,
+                self.button_frame,
                 text="👈🏻",
                 command=self.prev_image,
                 width=50,  # Ширина кнопки
@@ -1423,7 +1457,7 @@ class ImageProcces_and_TopMenu:
 
             # Кнопка "Вперёд"
             self.next_button = ctk.CTkButton(
-                button_frame,
+                self.button_frame,
                 text="👉🏻",
                 command=self.next_image,
                 width=50,  # Ширина кнопки
@@ -1439,20 +1473,12 @@ class ImageProcces_and_TopMenu:
         if answer:
             self.mult_load.destroy()
             self.mult_close.destroy()
+            self.mult_delete.destroy()
             self.next_button.destroy()
             self.prev_button.destroy()
+            self.button_frame.destroy()
+            self.button_down_frame.destroy()
             self.mult_images = []  # Очищаем список изображений
-
-            #Очищаем папки от временных файлов
-            folderinput_path = "temp/multiplProcess/input"
-            for file_name in os.listdir(folderinput_path):
-                file_path = os.path.join(folderinput_path, file_name)
-                self.delete_file(file_path)
-
-            folderoutput_path = "temp/multiplProcess/output"
-            for file_name in os.listdir(folderoutput_path):
-                file_path = os.path.join(folderoutput_path, file_name)
-                self.delete_file(file_path)
             
             self.window.canvas.delete("all")
             self.buttons_created = False
@@ -1485,6 +1511,68 @@ class ImageProcces_and_TopMenu:
             self.window.brightness_frame = None
             self.window.brightness_flag = False
 
+            messagebox.showinfo("Info", "All files are in 'temp/multiplProcess/output'")
+
+    def delete_all(self):
+        """Закрывает дочернее окно и очищает ресурсы."""
+        answer = messagebox.askokcancel("Warning", "Do you want to delete all?")
+        if answer:
+            self.next_button.destroy()
+            self.prev_button.destroy()
+            self.button_frame.destroy()
+            self.mult_images = []  # Очищаем список изображений
+
+            #Очищаем папки от временных файлов
+            folderinput_path = "HaskProj/temp/multiplProcess/input"
+            for file_name in os.listdir(folderinput_path):
+                file_path = os.path.join(folderinput_path, file_name)
+                self.delete_file(file_path)
+
+            folderoutput_path = "HaskProj/temp/multiplProcess/output"
+            for file_name in os.listdir(folderoutput_path):
+                file_path = os.path.join(folderoutput_path, file_name)
+                self.delete_file(file_path)
+
+            foldermovein_path = "HaskProj/temp/move/input"
+            for file_name in os.listdir(foldermovein_path):
+                file_path = os.path.join(foldermovein_path, file_name)
+                self.delete_file(file_path)
+
+            foldermoveout_path = "HaskProj/temp/move/output"
+            for file_name in os.listdir(foldermoveout_path):
+                file_path = os.path.join(foldermoveout_path, file_name)
+                self.delete_file(file_path)
+            
+            self.window.canvas.delete("all")
+
+            # Сбрасываем флаги и уничтожаем фреймы
+            self.window.negative_flag = False
+            self.window.sepia_flag = False
+            self.window.grayscale_flag = False
+
+            if self.window.brightness_frame:
+                self.window.brightness_frame.destroy()
+            if self.window.scale_frame:
+                self.window.scale_frame.destroy()
+            if self.window.pixel_frame:
+                self.window.pixel_frame.destroy()
+            if self.window.contrast_frame:
+                self.window.contrast_frame.destroy()
+            if self.window.rotation_frame:
+                self.window.rotation_frame.destroy()
+
+            self.window.scale_frame = None
+            self.window.scale_flag = False
+            self.window.pixel_frame = None
+            self.window.pixel_flag = False
+            self.window.contrast_frame = None
+            self.window.contrast_flag = False
+            self.window.rotation_frame = None
+            self.window.rotation_flag = False
+            self.window.brightness_frame = None
+            self.window.brightness_flag = False
+
+
 
     def display_mult_image(self, image):
         """Отображает изображение на Canvas."""
@@ -1506,39 +1594,7 @@ class ImageProcces_and_TopMenu:
         self.window.canvas.create_image(600, 400, image=photo, anchor="center")  # Центрируем изображение
         self.window.canvas.image = photo  # Сохраняем ссылку на изображение
 
-    def preview_and_apply(self, effect_func):
-        """Показывает предварительный просмотр и применяет эффект."""
-        if not self.images:
-            print("Ошибка: Нет загруженных изображений.")
-            return
-
-        # Применяем эффект к текущему изображению для предпросмотра
-        preview_image = effect_func(self.mult_images[self.current_image_index])
-
-        # Отображаем предварительный просмотр
-        self.display_mult_image(preview_image)
-
-        # Кнопка для применения эффекта ко всем изображениям
-        apply_button = ctk.CTkButton(
-            self.window.canvas,
-            text="Apply to All",
-            command=lambda: self.apply_effect_to_all(effect_func)
-        )
-        apply_button.pack(side="top", pady=10)
-
-    def apply_effect_to_all(self, effect_func):
-        """Применяет эффект ко всем загруженным изображениям."""
-        if not self.mult_images:
-            print("Ошибка: Нет загруженных изображений.")
-            return
-
-        # Применяем эффект ко всем изображениям
-        self.mult_images = [effect_func(image) for image in self.mult_images]
-        print("Эффект применён ко всем изображениям.")
-
-        # Обновляем предпросмотр
-        self.display_mult_image(self.mult_images[self.current_image_index])
-
+    
     def next_image(self):
         """Переключает на следующее изображение."""
         if not self.mult_images:
@@ -1579,11 +1635,11 @@ class ImageProcces_and_TopMenu:
                     )
 
                     # Проверяем и создаем директории
-                    os.makedirs("temp/move/input", exist_ok=True)
-                    os.makedirs("temp/move/output", exist_ok=True)
+                    os.makedirs("HaskProj/temp/move/input", exist_ok=True)
+                    os.makedirs("HaskProj/temp/move/output", exist_ok=True)
 
-                    image_path = f"temp/move/input/picture_moveX_0.png"
-                    output_path = f"temp/move/output/picture_moveX_0.png"
+                    image_path = f"HaskProj/temp/move/input/picture_moveX_0.png"
+                    output_path = f"HaskProj/temp/move/output/picture_moveX_0.png"
 
                     # Проверяем существование файла перед удалением
                     if os.path.exists(image_path):
@@ -1620,11 +1676,11 @@ class ImageProcces_and_TopMenu:
                     )
 
                     # Проверяем и создаем директории
-                    os.makedirs("temp/move/input", exist_ok=True)
-                    os.makedirs("temp/move/output", exist_ok=True)
+                    os.makedirs("HaskProj/temp/move/input", exist_ok=True)
+                    os.makedirs("HaskProj/temp/move/output", exist_ok=True)
 
-                    image_path = f"temp/move/input/picture_moveY_0.png"
-                    output_path = f"temp/move/output/picture_moveY_0.png"
+                    image_path = f"HaskProj/temp/move/input/picture_moveY_0.png"
+                    output_path = f"HaskProj/temp/move/output/picture_moveY_0.png"
 
                     # Проверяем существование файла перед удалением
                     if os.path.exists(image_path):

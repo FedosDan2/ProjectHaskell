@@ -13,10 +13,6 @@ if ! command -v stack &> /dev/null; then
     exit 1
 fi
 
-# Проверка и создание временных директорий
-mkdir -p temp/move/input temp/move/output
-mkdir -p temp/multiplProcess/input temp/multiplProcess/output
-mkdir -p temp/inputPath temp/outputPath
 
 echo "📂 Проверка и создание временных директорий завершена."
 
@@ -29,7 +25,8 @@ cd ..
 # Установка зависимостей для Python (фронтенд)
 echo "🐍 Проверка и установка зависимостей Python..."
 cd frontend_Fedya || exit
-pip install -r requirements.txt || { echo "❌ Ошибка установки зависимостей Python"; exit 1; }
+pip install -r requirements.txt
+pip install customtkinter
 cd ..
 
 echo "✅ Сборка завершена!"

@@ -33,17 +33,17 @@ class Window:
 
         # ======= Слои ==========
         self.layers_frame = ctk.CTkFrame(self.right_panel, width=300, height=300)
-        self.layers_frame.pack(side = "bottom", fill="both", padx=5, pady=5)
+        self.layers_frame.pack(side="bottom", fill="both", padx=5, pady=5)
 
         self.remove_button = ctk.CTkButton(self.layers_frame, text="Delete Layer", command=self.func.remove_layer)
         self.remove_button.pack(side="bottom", pady=10)
 
         # Место для кнопки сохранения изменений
         self.but_save = ctk.CTkFrame(self.right_panel, width=300, height=300)
-        self.but_save.pack(side = "bottom", fill="both", padx=10, pady=5)
+        self.but_save.pack(side="bottom", fill="both", padx=10, pady=5)
 
         self.btn_save = ctk.CTkButton(self.but_save, text="💾 Save changes", command=self.func.save_difference)
-        self.btn_save.pack(side="bottom", fill = "x", padx=5, pady=5)
+        self.btn_save.pack(side="bottom", fill="x", padx=5, pady=5)
 
         # Слои        
         self.layers_label = ctk.CTkLabel(self.layers_frame, text="🖼 Layers")
@@ -54,7 +54,7 @@ class Window:
         self.layers_list.pack(fill="both", expand=True, padx=5, pady=5)
 
         self.mult_work = ctk.CTkButton(self.but_save, text="Scripts", command=self.func.open_child_window)
-        self.mult_work.pack(fill = "x", padx=5, pady=5)
+        self.mult_work.pack(fill="x", padx=5, pady=5)
 
         # 🔹 Список слоёв
         self.layers = []  # Хранит данные всех слоёв (изображение, кнопка)
@@ -68,43 +68,31 @@ class Window:
         self.x_move.pack(side="bottom", fill="x")
 
         self.btn_left_x_move = ctk.CTkButton(
-                self.x_move, 
-                fg_color="#535353", 
-                text="⬅️", 
-                command= lambda: self.func.x_move(-15),
-                width=20,
-                height=20
-            )
+            self.x_move, fg_color="#535353", text="⬅️",
+            command=lambda: self.func.x_move(-15),
+            width=20, height=20
+        )
         self.btn_left_x_move.pack(side="left")
 
         self.btn_right_x_move = ctk.CTkButton(
-                self.x_move, 
-                fg_color="#535353", 
-                text="➡️", 
-                command= lambda: self.func.x_move(15),
-                width=20,
-                height=20
-            )
+            self.x_move, fg_color="#535353", text="➡️",
+            command=lambda: self.func.x_move(15),
+            width=20, height=20
+        )
         self.btn_right_x_move.pack(side="right")
 
         self.btn_top_y_move = ctk.CTkButton(
-                self.y_move, 
-                fg_color="#535353", 
-                text="⬆️", 
-                command= lambda: self.func.y_move(-15),
-                width=20,
-                height=20
-            )
+            self.y_move, fg_color="#535353", text="⬆️",
+            command=lambda: self.func.y_move(-15),
+            width=20, height=20
+        )
         self.btn_top_y_move.pack(side="top")
 
         self.btn_bottom_y_move = ctk.CTkButton(
-                self.y_move, 
-                fg_color="#535353", 
-                text="⬇️", 
-                command= lambda: self.func.y_move(15),
-                width=20,
-                height=20
-            )
+            self.y_move, fg_color="#535353", text="⬇️",
+            command=lambda: self.func.y_move(15),
+            width=20, height=20
+        )
         self.btn_bottom_y_move.pack(side="bottom")
 
         # 🖼 Переменные для изображений
@@ -141,6 +129,13 @@ class Window:
         self.func.geometry_transform()
         self.func.image_effects()
 
-    def run(self):
-        self.root.mainloop()
 
+# 🔹 Функция для запуска приложения (вне класса)
+def run():
+    window = Window()
+    window.root.mainloop()
+
+
+# 🔹 Запуск приложения
+if __name__ == "__main__":
+    run()
