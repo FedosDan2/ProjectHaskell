@@ -1,0 +1,44 @@
+C:\Users\erbol\lol\ProjectHaskell\backend_Erbol\.stack-work\dist\f24b2e15\build\autogen\Paths_HaskProj.hs:
+  hash: f80829e5c22002d4f63356803b5cb9391596fd43e4f124d4bfa24cb8bb1daf70
+C:\Users\erbol\lol\ProjectHaskell\backend_Erbol\.stack-work\dist\f24b2e15\build\autogen\cabal_macros.h:
+  hash: f459a3b2cfb12b32e9c9f989dafa3a1b45dd257a60d6319035417bef81b7677f
+C:\Users\erbol\lol\ProjectHaskell\backend_Erbol\CHANGELOG.md:
+  hash: 6ea97fde8abb85d4c743ff573541351ca0443d06c7e11a978d50469957be0b98
+C:\Users\erbol\lol\ProjectHaskell\backend_Erbol\Function\ImageEffects\Brightness\Brightness.hs:
+  hash: 2817285da03a336adb94eaa3b937ca764a08e53fe70385f4df6d0e5bda065448
+C:\Users\erbol\lol\ProjectHaskell\backend_Erbol\Function\ImageEffects\Pixelate\Pixelate.hs:
+  hash: e272d591c2803850b8e8e89e28cf82069509e6f573d4ea866cee76491ffea28f
+C:\Users\erbol\lol\ProjectHaskell\backend_Erbol\Function\ImageEffects\Sharpen\Sharpen.hs:
+  hash: da7cb9f8dbdc0fbe1ffc231c50d5bf66e2675d9bf5892a8e564e15ec62db4b0c
+C:\Users\erbol\lol\ProjectHaskell\backend_Erbol\Function\ImageProcessing\Contrast\Contrast.hs:
+  hash: 26879acc8a76f1c04686fbf097d3e8e75e52cc24996ff757f90dc43e67a4c40d
+C:\Users\erbol\lol\ProjectHaskell\backend_Erbol\Function\ImageProcessing\Grayscale\Grayscale.hs:
+  hash: ef949521a50e93bb1c9c2d3c0ce629878288bafc04b099eddf94fb2ca0672202
+C:\Users\erbol\lol\ProjectHaskell\backend_Erbol\Function\ImageProcessing\Negative\Negative.hs:
+  hash: 0dde01180b69e99d5a67fbaa9638ca48eb971aba63ccde8d2c76045b6e8bad09
+C:\Users\erbol\lol\ProjectHaskell\backend_Erbol\Function\ImageProcessing\Sepia\Sepia.hs:
+  hash: 2e346c1dc020fa59b4474d2cb969d912fcdb0d19c4fc35c657cc2378d6a4bf82
+C:\Users\erbol\lol\ProjectHaskell\backend_Erbol\Function\ImageProcessing\Solarize\Solarize.hs:
+  hash: 33f9f6e9695ed622db7d8f42fc027dfe4fdbfd6ab2e64cccaff97f95ea7a650a
+C:\Users\erbol\lol\ProjectHaskell\backend_Erbol\Function\ImageTransform\HorizontalFlip\HorizontalFlip.hs:
+  hash: e58bfcc93c242594b0deea5689c1b9979fae755adcc1da20a7bb77505f0fccc7
+C:\Users\erbol\lol\ProjectHaskell\backend_Erbol\Function\ImageTransform\Move\Horizontal.hs:
+  hash: 179d915ea6f3bf7923cc4b95d2909b6107d5bd52ab15e00a337e39d8fd7b8446
+C:\Users\erbol\lol\ProjectHaskell\backend_Erbol\Function\ImageTransform\Move\Vertical.hs:
+  hash: cc6dc8d71eca9211a194a3dae75b91dfd618364ea73e93a1dc9eba33c59b2d6a
+C:\Users\erbol\lol\ProjectHaskell\backend_Erbol\Function\ImageTransform\Rotation\Rotation.hs:
+  hash: c96829f9abba5723904e3a78cbd09fa15d37ccab6758b8a4cc9fb4e501cfabb9
+C:\Users\erbol\lol\ProjectHaskell\backend_Erbol\Function\ImageTransform\Scale\Scale.hs:
+  hash: 7e2625c0f9d494329f5b5c71f6453c23242e1df56ca11b467ed20ec61260bd2e
+C:\Users\erbol\lol\ProjectHaskell\backend_Erbol\Function\ImageTransform\VerticalFlip\VerticalFlip.hs:
+  hash: ab10dcbf7eb152178fc411f29b01b2c993471af33c58dbb6350671d36a247f47
+C:\Users\erbol\lol\ProjectHaskell\backend_Erbol\Function\Utils.hs:
+  hash: 4d2a3692ee79fdad18da07e26738e0570e50bab322f935bffe16618184f73b46
+C:\Users\erbol\lol\ProjectHaskell\backend_Erbol\HaskProj.cabal:
+  hash: a70145edec857c259f0a069938bd50c32130b367f040ef503f9d09129b8a5bfc
+C:\Users\erbol\lol\ProjectHaskell\backend_Erbol\README.md:
+  hash: 5e5628b5ae049e314fb3f2e4afcb3805c269ad84b6a633ab6c3cc11595233424
+C:\Users\erbol\lol\ProjectHaskell\backend_Erbol\package.yaml:
+  hash: 0f8104577243648aae637c56418fb1a52cd617ebc3cbaff51fd1085e1c795e41
+C:\ghcup\ghc\9.8.4\lib\x86_64-windows-ghc-9.8.4\rts-1.0.2\include\ghcversion.h:
+  hash: 95162794a3bf5e6167631fdd41a509846597231d523d0f21a76713b1f801373c
